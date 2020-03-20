@@ -10,11 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".Game_over"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_game_over"
+            android:theme="@style/FullscreenTheme"></activity>
+        <activity
             android:name=".Leaderbirb"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_leaderbirb"
             android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Settings"
             android:configChanges="orientation|keyboardHidden|screenSize"

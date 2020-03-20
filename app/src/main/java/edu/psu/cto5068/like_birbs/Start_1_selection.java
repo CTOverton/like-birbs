@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -161,5 +162,31 @@ public class Start_1_selection extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void selectEnv(View view) {
+        int buttonId = view.getId();
+
+        switch (buttonId) {
+            case (R.id.meadowButton):
+                // do stuff for setting enviorment object
+                break;
+            case (R.id.islandButton):
+                // do stuff for setting enviorment object
+                break;
+            case (R.id.snowButton):
+                // do stuff for setting enviorment object
+                break;
+            case (R.id.desertButton):
+                // do stuff for setting enviorment object
+                break;
+            default:
+                // error
+                break;
+        }
+
+        Intent nextScreenIntent = new Intent(this, Start_2_customize_birb.class);
+        startActivity(nextScreenIntent);
+
     }
 }

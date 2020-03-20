@@ -1,51 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
+    android:background="#323232"
     tools:context=".Start_1_selection">
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+    <ImageView
+        android:id="@+id/birb1"
+        android:layout_width="234dp"
+        android:layout_height="141dp"
+        android:layout_marginStart="132dp"
+        app:layout_constraintStart_toStartOf="@+id/meadowButton"
+        app:layout_constraintTop_toTopOf="@+id/meadowButton"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <ImageView
+        android:id="@+id/birb2"
+        android:layout_width="234dp"
+        android:layout_height="141dp"
+        android:layout_marginEnd="136dp"
+        android:scaleX="-1"
+        app:layout_constraintEnd_toEndOf="@+id/desertButton"
+        app:layout_constraintTop_toTopOf="@+id/desertButton"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+    <ImageButton
+        android:id="@+id/desertButton"
+        android:layout_width="274dp"
+        android:layout_height="163dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#4E109B"
+        android:scaleType="fitXY"
+        android:onClick="selectEnv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/islandButton"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/bg_desert" />
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+    <ImageButton
+        android:id="@+id/snowButton"
+        android:layout_width="274dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="#4E109B"
+        android:scaleType="fitXY"
+        android:onClick="selectEnv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/desertButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meadowButton"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/bg_snow" />
 
-        </LinearLayout>
-    </FrameLayout>
+    <ImageButton
+        android:id="@+id/meadowButton"
+        android:layout_width="274dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#4E109B"
+        android:scaleType="fitXY"
+        android:onClick="selectEnv"
+        app:layout_constraintEnd_toStartOf="@+id/islandButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_meadow" />
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/islandButton"
+        android:layout_width="269dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="44dp"
+        android:backgroundTint="#4E109B"
+        android:scaleType="fitXY"
+        android:onClick="selectEnv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bg_island" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

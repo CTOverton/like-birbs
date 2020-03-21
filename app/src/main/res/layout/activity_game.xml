@@ -1,51 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0099cc"
-    tools:context=".Game">
+    android:background="@drawable/bg_desert"
+    tools:context=".Game" >
 
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:keepScreenOn="true"
-        android:text="@string/dummy_content"
-        android:textColor="#33b5e5"
-        android:textSize="50sp"
-        android:textStyle="bold" />
+    <Button
+        android:id="@+id/view_logs"
+        android:layout_width="184dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTintMode="add"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/view_logs"
+        android:textColor="#FFFFFF"
+        android:onClick="gameClick"
+        app:layout_constraintBottom_toBottomOf="@+id/next_gen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/next_gen" />
 
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+    <Button
+        android:id="@+id/next_gen"
+        android:layout_width="223dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTintMode="add"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/next_gen"
+        android:textColor="#FFFFFF"
+        android:onClick="gameClick"
 
-        <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
+        app:layout_constraintEnd_toStartOf="@+id/main_menu"
+        app:layout_constraintHorizontal_bias="0.325"
+        app:layout_constraintStart_toEndOf="@+id/view_logs"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+    <Button
+        android:id="@+id/main_menu"
+        android:layout_width="184dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTintMode="add"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:text="@string/main_menu"
+        android:textColor="#FFFFFF"
+        android:onClick="gameClick"
+        app:layout_constraintBottom_toBottomOf="@+id/next_gen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/next_gen" />
 
-        </LinearLayout>
-    </FrameLayout>
+    <ImageView
+        android:id="@+id/birb0"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/birb1"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb0"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb2"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb1"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb3"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb2"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb4"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb3"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb5"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb4"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb6"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb5"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb7"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/birb6"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb8"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.166"
+        app:layout_constraintStart_toEndOf="@+id/birb7"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb9"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/birb10"
+        app:layout_constraintEnd_toStartOf="@+id/birb10"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb10"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/birb11"
+        app:layout_constraintEnd_toStartOf="@+id/birb11"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb11"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/birb12"
+        app:layout_constraintEnd_toStartOf="@+id/birb12"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb12"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/birb13"
+        app:layout_constraintEnd_toStartOf="@+id/birb13"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+    <ImageView
+        android:id="@+id/birb13"
+        android:layout_width="66dp"
+        android:layout_height="91dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/birb_the_perfect_birb" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

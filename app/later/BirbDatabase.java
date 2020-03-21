@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = {Birb.class}, version = 1, exportSchema = false)
+@TypeConverters({Converter.class})
 public abstract class BirbDatabase extends RoomDatabase {
     public interface BirbListener {
         void onBirbReturn(Birb birb);

@@ -15,4 +15,10 @@
     <string name="title_activity_leaderbirb">Leaderbirb</string>
 
     <string name="title_activity_game_over">Game_over</string>
+
+    <string name="next_gen">NEXT GEN</string>
+
+    <string name="main_menu">MAIN MENU</string>
+
+    <string name="view_logs">VIEW LOGS</string>
 </resources>

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -161,5 +162,26 @@ public class Game extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void gameClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case (R.id.view_logs):
+                // code to view logs
+                break;
+            case (R.id.next_gen):
+                // code view go to next gen
+                break;
+            case (R.id.main_menu):
+                // launch dialog asking to save / no save and quit
+                Intent nextScreenIntent = new Intent(this, FullscreenActivity.class);
+                startActivity(nextScreenIntent);
+                break;
+            default:
+                // error
+                break;
+        }
     }
 }

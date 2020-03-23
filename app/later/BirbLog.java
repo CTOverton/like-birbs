@@ -1,5 +1,3 @@
-package edu.psu.cto5068.like_birbs;
-
 import java.util.ArrayList;
 
 public class BirbLog {

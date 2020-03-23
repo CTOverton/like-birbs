@@ -21,4 +21,8 @@
     <string name="main_menu">MAIN MENU</string>
 
     <string name="view_logs">VIEW LOGS</string>
+    <string name="scores">SCORES</string>
+    <string name="menu">MENU</string>
+    <string name="play">PLAY</string>
+    <string name="exit">EXIT</string>
 </resources>

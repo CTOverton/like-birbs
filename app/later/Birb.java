@@ -1,34 +1,8 @@
+package edu.psu.cto5068.like_birbs;
 
-Skip to content
-        Pull requests
-        Issues
-        Marketplace
-        Explore
-@SageTheWizard
-CTOverton /
-        like-birbs
-
-        2
-        0
-
-        0
-
-        Code
-        Issues 4
-        Pull requests 0
-        Actions
-        Projects 0
-        Wiki
-        Security
-        Insights
-        like-birbs/app/later/Birb.java
-@CTOverton CTOverton Fullscreen and landscape lock 6dee1cf 3 days ago
-        407 lines (341 sloc) 11.9 KB
-        package edu.psu.cto5068.like_birbs;
-
-        import androidx.room.ColumnInfo;
-        import androidx.room.Entity;
-        import androidx.room.PrimaryKey;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName="birbs")
 public class Birb {

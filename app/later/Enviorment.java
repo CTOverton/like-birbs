@@ -223,9 +223,68 @@ public class Enviorment {
             }
         }
     }
-
+    /*
+     * Predator Detection range is based on enviorment
+     *      Meadow: GREEN (ie. 00000 11111 00000) or 992
+     *      Snow:  WHITE (ie. 11111 11111 11111) or 32767
+     *      Island: BLUE (ie. 00000 00000 11111) or 31
+     *      Desert: YELLOW (ie. 11111 11111 00000) or 32736
+     *
+     *      Nocturnal: BLACK (ie. 00000 00000 00000) or 0
+     */
     public void predatorsEat() {
-        // TODO: Work out RNG Rolls
+        // TODO:
+        for (Birb birb : birbs) {
+            int succRange = (int) (Math.random() * 100);
+            int idealColor;
+            int[] predatorDetection = new int[4];
+            int predatorSpeed;
+
+            switch (predatorTypes) {
+                case (1):
+                    predatorSpeed = 10000;
+                    break;
+                case (2):
+                    predatorSpeed = 20000;
+                    break;
+                case (3):
+                    predatorSpeed = 30000;
+                    break;
+                default:
+                    // error
+                    predatorSpeed = 0;
+                    break;
+            }
+
+            switch (landType) {
+                case (1):
+                    idealColor = 992;
+                    predatorDetection = {50, 100, 200, 500};
+                    break;
+                case (2):
+                    idealColor = 32736;
+                    predatorDetection = {500, 1000, 2000, 5000};
+                    break;
+                case (3):
+                    idealColor = 32767;
+                    predatorDetection = {500, 1000, 2000, 5000};
+                    break;
+                case (4):
+                    idealColor = 31;
+                    predatorDetection = {25, 50, 100, 200};
+                    break;
+                default:
+                    // error
+                    idealColor = 0;
+                    predatorDetection = {0, 0, 0, 0};
+                    break;
+            }
+
+            if (birb.isNocturnal()) {
+                idealColor = 0;
+                predatorDetection = {25, 50, 100, 200}
+            }
+        }
     }
 
     public void birbsTemperature() {

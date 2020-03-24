@@ -139,8 +139,8 @@ public class Birb {
 
         tempBinString = Integer.toBinaryString(color);
         tempBinStringLength = tempBinString.length();
-        this.color = new int[16];
-        for (int i = 0; i < 16; i++) {
+        this.color = new int[15];
+        for (int i = 0; i < 15; i++) {
             if (i > tempBinStringLength) {
                 this.color[i] = 0;
             }
@@ -168,13 +168,13 @@ public class Birb {
         this.strength    = new int[16];
         this.speed       = new int[16];
         this.feathers    = new int[16];
-        this.color       = new int[16];
+        this.color       = new int[15];
         this.swimming    = new int[16];
 
         int strengthSplit    = (int) (Math.random() * 16);
         int speedSplit       = (int) (Math.random() * 16);
         int feathersSplit    = (int) (Math.random() * 16);
-        int colorSplit       = (int) (Math.random() * 16);
+        int colorSplit       = (int) (Math.random() * 15);
         int swimmingSplit    = (int) (Math.random() * 16);
 
         BirbNameGenerator nameMaker = new BirbNameGenerator();
@@ -206,12 +206,14 @@ public class Birb {
             this.feathersDecimal += this.feathers[i] * Math.pow(2, (15 - i));
 
             // Color DNA Cross
-            if (i <= colorSplit) {
-                this.color[i] = parent1.getColor()[i];
-            } else {
-                this.color[i] = parent2.getColor()[i];
+            if (i < 15) {
+                if (i <= colorSplit) {
+                    this.color[i] = parent1.getColor()[i];
+                } else {
+                    this.color[i] = parent2.getColor()[i];
+                }
+                this.colorDecimal += this.color[i] * Math.pow(2, (14 - i));
             }
-            this.colorDecimal += this.color[i] * Math.pow(2, (15 - i));
 
             // Swimming DNA Cross
             if (i <= swimmingSplit) {
@@ -240,7 +242,7 @@ public class Birb {
         // Using 160 so it can be used both as the index for mutation AND as a 10% Roll
         int strengthRoll = (int) (Math.random() * 160);
         int speedRoll    = (int) (Math.random() * 160);
-        int colorRoll    = (int) (Math.random() * 160);
+        int colorRoll    = (int) (Math.random() * 150);
         int featherRoll  = (int) (Math.random() * 160);
         int swimmingRoll = (int) (Math.random() * 160);
 
@@ -270,7 +272,7 @@ public class Birb {
             }
         }
 
-        if (colorRoll < 16) {
+        if (colorRoll < 15) {
             if (this.color[colorRoll] == 0) {
                 this.color[colorRoll]  = 1;
             }
@@ -278,8 +280,8 @@ public class Birb {
                 this.color[colorRoll] = 0;
             }
             colorDecimal = 0;
-            for (int i = 0; i < 16; i++) {
-                colorDecimal += this.color[i] * Math.pow(2, (15 - i));
+            for (int i = 0; i < 15; i++) {
+                colorDecimal += this.color[i] * Math.pow(2, (14 - i));
             }
         }
 

@@ -1,6 +1,7 @@
 package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -160,5 +161,28 @@ public class FullscreenActivity extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void gameClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case (R.id.exitButton):
+                // code to exit game
+                break;
+            case (R.id.goToScoresButton):
+                // code to see scores
+                Intent nextScreenIntent = new Intent(this, Leaderbirb.class);
+                startActivity(nextScreenIntent);
+                break;
+            case (R.id.playButton):
+                // code to start game
+                Intent nextScreenIntent = new Intent(this, Start_1_selection.class);
+                startActivity(nextScreenIntent);
+                break;
+            default:
+                // error
+                break;
+        }
     }
 }

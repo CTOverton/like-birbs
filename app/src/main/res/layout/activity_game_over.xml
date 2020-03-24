@@ -29,6 +29,7 @@
         android:text="@string/menu"
         android:textAlignment="center"
         android:textColor="@android:color/white"
+        android:onClick="gameClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -46,6 +47,7 @@
         android:text="@string/scores"
         android:textAlignment="center"
         android:textColor="@android:color/white"
+        android:onClick="scoresClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

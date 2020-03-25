@@ -3,7 +3,6 @@ package edu.psu.cto5068.like_birbs;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
 @Entity(tableName="birbs")
 public class Birb {
     // DNA Arrays

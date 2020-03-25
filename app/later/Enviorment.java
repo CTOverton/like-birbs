@@ -237,7 +237,7 @@ public class Enviorment {
         for (Birb birb : birbs) {
             int succRange = (int) (Math.random() * 100);
             int idealColor;
-            int[] predatorDetection = new int[4];
+            int[] predatorDetection;
             int predatorSpeed;
 
             switch (predatorTypes) {
@@ -259,30 +259,88 @@ public class Enviorment {
             switch (landType) {
                 case (1):
                     idealColor = 992;
-                    predatorDetection = {50, 100, 200, 500};
+                    predatorDetection = new int[]{50, 100, 200, 500};
                     break;
                 case (2):
                     idealColor = 32736;
-                    predatorDetection = {500, 1000, 2000, 5000};
+                    predatorDetection = new int[]{500, 1000, 2000, 5000};
                     break;
                 case (3):
                     idealColor = 32767;
-                    predatorDetection = {500, 1000, 2000, 5000};
+                    predatorDetection = new int[]{500, 1000, 2000, 5000};
                     break;
                 case (4):
                     idealColor = 31;
-                    predatorDetection = {25, 50, 100, 200};
+                    predatorDetection = new int[]{25, 50, 100, 200};
                     break;
                 default:
                     // error
                     idealColor = 0;
-                    predatorDetection = {0, 0, 0, 0};
+                    predatorDetection = new int[]{0, 0, 0, 0};
                     break;
             }
 
             if (birb.isNocturnal()) {
                 idealColor = 0;
-                predatorDetection = {25, 50, 100, 200}
+                predatorDetection = new int[]{25, 50, 100, 200};
+            }
+
+            boolean detected = true;
+            if (succRange < 50) {
+                if (idealColor - predatorDetection[0] < birb.getColorDecimal() &&
+                    birb.getColorDecimal() < idealColor + predatorDetection[0]) {
+                    detected = false;
+                }
+            }
+            else if (50 < succRange && succRange < 79) {
+                if (idealColor - predatorDetection[1] < birb.getColorDecimal() &&
+                    birb.getColorDecimal() < idealColor + predatorDetection[1]) {
+                    detected = false;
+                }
+            }
+            else if (80 < succRange && succRange < 95) {
+                if (idealColor - predatorDetection[2] < birb.getColorDecimal() &&
+                        birb.getColorDecimal() < idealColor + predatorDetection[2]) {
+                    detected = false;
+                }
+            }
+            else {
+                if (idealColor - predatorDetection[3] < birb.getColorDecimal() &&
+                        birb.getColorDecimal() < idealColor + predatorDetection[3]) {
+                    detected = false;
+                }
+            }
+
+            succRange = (int) (Math.random() * 100);
+            if (detected) {
+                if (succRange < 50) {
+                    if (predatorSpeed - 5000 < birb.getSpeedDecimal() &&
+                        birb.getSpeedDecimal() < predatorSpeed + 5000) {
+                        log.addDeath(birb.getName(), 1, birb.getGenerationsAlive());
+                        birbs.remove(birb);
+                    }
+                }
+                else if (50 < succRange && succRange < 79) {
+                    if (predatorSpeed - 8000 < birb.getSpeedDecimal() &&
+                            birb.getSpeedDecimal() < predatorSpeed + 8000) {
+                        log.addDeath(birb.getName(), 1, birb.getGenerationsAlive());
+                        birbs.remove(birb);
+                    }
+                }
+                else if (80 < succRange && succRange < 95) {
+                    if (predatorSpeed - 10000 < birb.getSpeedDecimal() &&
+                            birb.getSpeedDecimal() < predatorSpeed + 10000) {
+                        log.addDeath(birb.getName(), 1, birb.getGenerationsAlive());
+                        birbs.remove(birb);
+                    }
+                }
+                else {
+                    if (predatorSpeed - 15000 < birb.getSpeedDecimal() &&
+                            birb.getSpeedDecimal() < predatorSpeed + 15000) {
+                        log.addDeath(birb.getName(), 1, birb.getGenerationsAlive());
+                        birbs.remove(birb);
+                    }
+                }
             }
         }
     }
@@ -344,7 +402,7 @@ public class Enviorment {
     }
 
     public void decrementRandomEventDuration() {
-        if (0 == --(this.randomEventDurationLeft) {
+        if (0 == --(this.randomEventDurationLeft)) {
             this.currentRandomEventType = 0;
         }
     }

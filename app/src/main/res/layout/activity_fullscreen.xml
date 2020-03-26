@@ -16,54 +16,64 @@
          android:fitsSystemWindows. -->
 
 
-    <Button
-        android:id="@+id/playButton"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:background="@drawable/round_button"
-        android:backgroundTint="#3F51B5"
-        android:backgroundTintMode="add"
-        android:text="@string/play"
-        android:textColor="@android:color/white"
-        android:onClick="playClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/goToScoresButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_contraintEnd_toStartOf="@+id/goToScoresButton" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <Button
-        android:id="@+id/goToScoresButton"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:background="@drawable/round_button"
-        android:backgroundTint="#3F51B5"
-        android:backgroundTintMode="add"
-        android:text="@string/scores"
-        android:textColor="@android:color/white"
-        android:onClick="scoresClick"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/exitButton"
-        app:layout_constraintStart_toEndOf="@+id/playButton" />
+        <Button
+            android:id="@+id/playButton"
+            android:layout_width="142dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#3F51B5"
+            android:backgroundTintMode="add"
+            android:onClick="gameClick"
+            android:text="@string/play"
+            android:textColor="@android:color/white" />
 
-    <Button
-        android:id="@+id/exitButton"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:background="@drawable/round_button"
-        android:backgroundTint="#3F51B5"
-        android:backgroundTintMode="add"
-        android:text="@string/exit"
-        android:onClick="exitClick"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/goToScoresButton" />
+        <Button
+            android:id="@+id/goToScoresButton"
+            android:layout_width="142dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#3F51B5"
+            android:backgroundTintMode="add"
+            android:onClick="gameClick"
+            android:text="@string/scores"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_width="142dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#3F51B5"
+            android:backgroundTintMode="add"
+            android:onClick="gameClick"
+            android:text="@string/settings"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/exitButton"
+            android:layout_width="142dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#3F51B5"
+            android:backgroundTintMode="add"
+            android:onClick="gameClick"
+            android:text="@string/exit"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,8 @@
         <activity
             android:name=".SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".Game_over"
             android:configChanges="orientation|keyboardHidden|screenSize"

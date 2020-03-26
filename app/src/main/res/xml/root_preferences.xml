@@ -14,38 +14,33 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <PreferenceCategory app:title="@string/messages_header">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory android:title= "@string/highscores">
 
         <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
+            android:defaultValue="Anonymous Birb"
+            android:key="username"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:inputType="textNoSuggestions"
+            android:title="@string/name_hint" />
         <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
+            android:defaultValue="10"
+            android:entries="@array/highscores_display"
+            android:entryValues="@array/highscores_display"
+            android:key="num_scores"
+            android:title="@string/highscore_disp" />
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="upload_score"
+            android:title="@string/upload_to_db" />
     </PreferenceCategory>
+    <PreferenceCategory android:title="@string/multimedia">
 
-    <PreferenceCategory app:title="@string/sync_header">
-
-        <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
-
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="play_music"
+            android:title="@string/play_music" />
     </PreferenceCategory>
-
 </PreferenceScreen>

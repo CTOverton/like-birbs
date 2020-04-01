@@ -32,4 +32,13 @@
     <string name="highscore_disp">Number of Highscores Shown</string>
     <string name="play_music">Background Music</string>
     <string name="upload_to_db">Submit Scores to Highscore Board</string>
+    <string name="customize_lbl_speed">Speed</string>
+    <string name="customize_lbl_feather_density">Feather Density</string>
+    <string name="customize_lbl_strength">Strength</string>
+    <string name="customize_lbl_swimming_strength">Swimming Strength</string>
+    <string name="customize_lbl_body_color">Body Color</string>
+    <string name="customize_lbl_secondary_color">Secondary Color</string>
+    <string name="customize_lbl_strength_num">0%</string>
+    <string name="customize_lbl_birbname">Gerold</string>
+    <string name="customize_lbl_birbnum">1/10</string>
 </resources>

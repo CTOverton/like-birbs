@@ -1,9 +1,11 @@
 package edu.psu.cto5068.like_birbs;
 
+import androidx.room.TypeConverter;
+
 public class Converter {
     @TypeConverter
     public static int[] fromString(String binString) {
-        int[16] binArry = new int[16];
+        int[] binArry = new int[16];
         String[] tokens = binString.split("-");
 
         for (int i = 0; i < 16; i++) {
@@ -21,7 +23,7 @@ public class Converter {
                 binStr = binStr + binArry[i] + "-";
             }
             else {
-                binStr = binStr + binArry[i]
+                binStr = binStr + binArry[i];
             }
         }
 

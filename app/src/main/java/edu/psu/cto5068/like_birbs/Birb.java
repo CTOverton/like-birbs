@@ -409,4 +409,70 @@ public class Birb {
     public String getName() {
         return name;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setStrength(int[] str) {
+        strength = str;
+    }
+    public void setSpeed(int[] spd) {
+        speed = spd;
+    }
+
+    public void setColor(int[] col) {
+        color = col;
+    }
+
+    public void setFeathers(int[] feath) {
+        feathers = feath;
+    }
+
+    public void setSwimming(int[] swm) {
+        swimming = swm;
+    }
+
+    public void setStrengthDecimal(int strDec) {
+        strengthDecimal = strDec;
+    }
+
+    public void setSpeedDecimal(int spdDec) {
+        speedDecimal = spdDec;
+    }
+
+    public void setFeathersDecimal(int feathDec) {
+        feathersDecimal = feathDec;
+    }
+
+    public void setColorDecimal(int colDec) {
+        colorDecimal = colDec;
+    }
+
+    public void setSwimmingDecimal(int swmDec) {
+        swimmingDecimal = swmDec;
+    }
+
+    public void setNocturnal(boolean noc) {
+        nocturnal = noc;
+    }
+
+    public void setCarniverous(boolean carn) {
+        carniverous = carn;
+    }
+
+    public void setCannibalistic(boolean cann) {
+        cannibalistic = cann;
+    }
+
+    public void setName(String nm) {
+        name = nm;
+    }
+
+    public void setGenerationsAlive(int gens) {
+        generationsAlive = gens;
+    }
 }

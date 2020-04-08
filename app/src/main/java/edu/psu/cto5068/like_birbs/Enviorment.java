@@ -50,7 +50,9 @@ public class Enviorment {
      *  RANDOM EVENT TYPE KEYS
      *  0 - None
      *  1 - Bonus Food Veg
+     *      11 - Famine Veg
      *  2 - Bonus Food Meat
+     *      12 - Famine Meat
      *  3 - Increased Temperature
      *  4 - Decreased Temperature
      *  5 - Pack of Alien Predators - increase detection, increase speed of predators
@@ -65,6 +67,20 @@ public class Enviorment {
      *              - Pandemic
      *              - Fallout
      */
+
+    public static final int NO_EVENT                  = 0;
+    public static final int BONUS_VEG_EVENT           = 1;
+    public static final int BONUS_MEAT_EVENT          = 2;
+    public static final int INCREASED_TEMP_EVENT      = 3;
+    public static final int DECREASED_TEMP_EVENT      = 4;
+    public static final int ALIEN_PREDATOR_EVENT      = 5;
+    public static final int HEAVY_RAINS_EVENT         = 6;
+    public static final int RADIOACTIVE_FALLOUT_EVENT = 7;
+    public static final int PANDEMIC_EVENT            = 8;
+    public static final int BIRBY_BOOMERS_EVENT       = 9;
+    public static final int CRASHED_SHIP              = 10;
+    public static final int FAMINE_VEG_EVENT          = 11;
+    public static final int FAMINE_MEAT_EVENT         = 12;
 
     public Enviorment(ArrayList<Birb> initPopulation, int envType) {
         birbs = new ArrayList<>(initPopulation);
@@ -114,6 +130,8 @@ public class Enviorment {
                 generationNum    = 0;
 
         }
+        currentRandomEventType = NO_EVENT;
+        randomEventDurationLeft = 0;
     }
 
     public void birbsEat() {
@@ -124,6 +142,24 @@ public class Enviorment {
         int tempVegAmount = this.vegFoodAmount;
         int tempMeatAmount = this.meatFoodAmount;
         boolean allEaten;
+
+        if (currentRandomEventType == BONUS_VEG_EVENT) {
+            tempVegAmount *= 2;
+            this.randomEventDurationLeft--;
+        }
+        else if (currentRandomEventType == BONUS_MEAT_EVENT) {
+            tempMeatAmount *= 2;
+            this.randomEventDurationLeft--;
+        }
+        else if (currentRandomEventType == FAMINE_VEG_EVENT) {
+            tempVegAmount /= 2;
+            this.randomEventDurationLeft--;
+        }
+        else if (currentRandomEventType == FAMINE_MEAT_EVENT) {
+            tempMeatAmount /= 2;
+            this.randomEventDurationLeft--;
+        }
+
         do {
             allEaten = true;
             for (Birb birb : birbs) {
@@ -290,6 +326,7 @@ public class Enviorment {
                     break;
             }
 
+
             switch (landType) {
                 case (1):
                     idealColor = 992;
@@ -317,6 +354,14 @@ public class Enviorment {
             if (birb.isNocturnal()) {
                 idealColor = 0;
                 predatorDetection = new int[]{25, 50, 100, 200};
+            }
+
+            if (currentRandomEventType == ALIEN_PREDATOR_EVENT) {
+                predatorSpeed += 10000;
+                for (int i = 0; i < 4; i++) {
+                    predatorDetection[i] += 250;
+                }
+                this.currentRandomEventType--;
             }
 
             boolean detected = true;
@@ -382,6 +427,16 @@ public class Enviorment {
     public void birbsTemperature() {
         // target feathers number is 65536 - [temperature * 1,000]
         int targetDecFeathers = 65_536 - temperature * 1000;
+
+        // apply event
+        if (currentRandomEventType == INCREASED_TEMP_EVENT) {
+            targetDecFeathers =- (int) (Math.random() * 5000) + 1000;
+            this.randomEventDurationLeft--;
+        }
+        else if (currentRandomEventType == DECREASED_TEMP_EVENT) {
+            targetDecFeathers =+ (int) (Math.random() * 5000) + 1000;
+            this.randomEventDurationLeft--;
+        }
         // Survival range
         int succRange;
         for (Birb birb: birbs) {
@@ -441,7 +496,11 @@ public class Enviorment {
 
         if (hasWater) {
             int succRange = (int) (Math.random() * 100);
-            int waterLevels = (int) (Math.random() * 60000);
+            int waterLevels = (int) (Math.random() * 55000);
+            if (currentRandomEventType == HEAVY_RAINS_EVENT) {
+                waterLevels += (int) (Math.random() * 10000) + 1000;
+                this.randomEventDurationLeft--;
+            }
 
             for (Birb birb : birbs) {
                 if (succRange < 50) {
@@ -483,7 +542,10 @@ public class Enviorment {
     public void birbsReproduce() {
         int initBirbSize = birbs.size();
         for (int i = 0; i < initBirbSize - 1; i++) {
-            birbs.add(new Birb(birbs.get(i), birbs.get(i+1)));
+            birbs.add(new Birb(birbs.get(i), birbs.get(i+1), this.currentRandomEventType == RADIOACTIVE_FALLOUT_EVENT));
+        }
+        if (this.currentRandomEventType == RADIOACTIVE_FALLOUT_EVENT) {
+            this.randomEventDurationLeft--;
         }
     }
 
@@ -525,12 +587,6 @@ public class Enviorment {
     }
 
 
-    public void decrementRandomEventDuration() {
-        if (0 == --(this.randomEventDurationLeft)) {
-            this.currentRandomEventType = 0;
-        }
-    }
-
     public BirbLog getLogs() {
         return log;
     }
@@ -540,17 +596,17 @@ public class Enviorment {
     }
 
     public int randomEvent() {
-        if (currentRandomEventType == 0) {
+        if (currentRandomEventType == NO_EVENT) {
             int newRandom = (int) (Math.random() * 4);
             if (newRandom == 0) {
                 newRandom = (int) (Math.random() * 11);
-                return newRandom; // tell driver to set new random event
+                return newRandom; // tell driver to set new random event handle ship event if == 10
             }
             else {
                 return 0; // tell driver to do nothing, no new event
             }
         }
-        else if (currentRandomEventType == 8) { //  Birb Flu
+        else if (currentRandomEventType == PANDEMIC_EVENT) { //  Birb Flu
             int decemator; // 1/10 chance of dying of birb flu
             for (Birb birb: birbs) {
                 decemator = (int) (Math.random() * 10);
@@ -559,13 +615,15 @@ public class Enviorment {
                     birbs.remove(birb);
                 }
             }
-            return -1; // tell driver to decrease random event timer
+            this.randomEventDurationLeft--;
+            return 0;
         }
-        else if (currentRandomEventType == 9) { // birby boomers
+        else if (currentRandomEventType == BIRBY_BOOMERS_EVENT) { // birby boomers
             this.birbsReproduce();
-            return -1;
+            this.randomEventDurationLeft--;
+            return 0;
         }
 
-        return -1;
+        return 0;
     }
 }

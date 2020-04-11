@@ -1,5 +1,9 @@
 package edu.psu.cto5068.like_birbs;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.ArrayList;
 /*
      HOW RNG ROLLS WORK FOR ENVIORMENT - Jacob's RNG Magic 2.0
@@ -29,6 +33,7 @@ import java.util.ArrayList;
             [95 - 99] 5% - Super Ultra Mega Giga Kayak
                 if X > 1000 Success for Aggressor
  */
+@Entity(tableName = "enviorment")
 public class Enviorment {
     // Birb Population
     private ArrayList<Birb> birbs;
@@ -36,15 +41,20 @@ public class Enviorment {
     private BirbLog log;
     // Environment information
     private int predatorTypes;
+    @ColumnInfo(name = "landBin")
     private int landType;
     private int vegFoodAmount;
     private int meatFoodAmount;
     private boolean hasWater;
     private int temperature;
     // Generations Passed Counter
+    @PrimaryKey(autoGenerate = false)
+    @ColumnInfo(name = "genBin")
     private int generationNum;
     // Random Event Type
+    @ColumnInfo(name = "currentRandomEventTypeBin")
     private int currentRandomEventType;
+    @ColumnInfo(name = "randomEventDurationLeftBin")
     private int randomEventDurationLeft;
     /*
      *  RANDOM EVENT TYPE KEYS

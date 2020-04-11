@@ -1,6 +1,7 @@
 package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -145,6 +146,7 @@ public class FullscreenActivity extends AppCompatActivity {
         switch (id) {
             case (R.id.exitButton):
                 // code to exit game
+                System.exit(0);
                 break;
             case (R.id.goToScoresButton):
                 // code to see scores

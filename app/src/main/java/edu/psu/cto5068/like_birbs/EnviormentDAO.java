@@ -1,4 +1,6 @@
 package edu.psu.cto5068.like_birbs;
+import android.os.Environment;
+
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -10,18 +12,18 @@ import androidx.room.Update;
 public interface EnviormentDAO {
     // note: table is enviorment
     @Insert
-    void insertCurrentRandomEventType(int currentRandomEventType);
+    void insertCurrentRandomEventType(Enviorment env);
 
     @Insert
-    void insertGenerationNum(int generationNum);
+    void insertGenerationNum(Enviorment env);
 
     @Insert
-    void insertRandomEventDurationLeft(int randomEventDurationLeft);
+    void insertRandomEventDurationLeft(Enviorment env);
 
     @Insert
-    void insertLandType(int landType);
+    void insertLandType(Enviorment env);
 
-    @Query("DELETE FROM enviorment")
+    @Query("DELETE FROM enviorment WHERE 1=1")
     void deleteAll();
 
     @Query("SELECT landBin FROM enviorment")
@@ -37,8 +39,8 @@ public interface EnviormentDAO {
     int getRandomEventDurationLeft();
 
     @Update
-    void updateCurrentRandomEventType(int currentRandomEventType);
+    void updateCurrentRandomEventType(Enviorment env);
 
     @Update
-    void updateRandomEventDurationLeft(int randomEventDurationLeft);
+    void updateRandomEventDurationLeft(Enviorment env);
 }

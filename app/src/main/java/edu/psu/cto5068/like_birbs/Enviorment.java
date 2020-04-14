@@ -2,6 +2,7 @@ package edu.psu.cto5068.like_birbs;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
@@ -36,16 +37,23 @@ import java.util.ArrayList;
 @Entity(tableName = "enviorment")
 public class Enviorment {
     // Birb Population
+    @Ignore
     private ArrayList<Birb> birbs;
     // Death and Birth log
+    @Ignore
     private BirbLog log;
     // Environment information
+    @Ignore
     private int predatorTypes;
     @ColumnInfo(name = "landBin")
     private int landType;
+    @Ignore
     private int vegFoodAmount;
+    @Ignore
     private int meatFoodAmount;
+    @Ignore
     private boolean hasWater;
+    @Ignore
     private int temperature;
     // Generations Passed Counter
     @PrimaryKey(autoGenerate = false)

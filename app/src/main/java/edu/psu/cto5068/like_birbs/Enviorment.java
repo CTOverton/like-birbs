@@ -56,6 +56,34 @@ public class Enviorment {
     private int currentRandomEventType;
     @ColumnInfo(name = "randomEventDurationLeftBin")
     private int randomEventDurationLeft;
+
+    public Enviorment() {}
+
+    public void setLandType(int LandType) {
+        this.landType = LandType;
+    }
+    public void setGenerationNum(int GenerationNum) {
+        this.generationNum = GenerationNum;
+    }
+    public void setCurrentRandomEventType(int CurrentRandomEventType) {
+        this.currentRandomEventType = CurrentRandomEventType;
+    }
+    public void setRandomEventDurationLeft(int RandomEventDurationLeft) {
+        this.randomEventDurationLeft = RandomEventDurationLeft;
+    }
+    public int getLandType() {
+        return landType;
+    }
+    public int getGenerationNum() {
+        return generationNum;
+    }
+    public int getCurrentRandomEventType() {
+        return currentRandomEventType;
+    }
+    public int getRandomEventDurationLeft() {
+        return randomEventDurationLeft;
+    }
+
     /*
      *  RANDOM EVENT TYPE KEYS
      *  0 - None

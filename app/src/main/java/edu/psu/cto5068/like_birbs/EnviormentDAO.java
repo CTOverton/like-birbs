@@ -8,6 +8,7 @@ import androidx.room.Update;
 
 @Dao
 public interface EnviormentDAO {
+    // note: table is enviorment
     @Insert
     void insertCurrentRandomEventType(int currentRandomEventType);
 
@@ -20,6 +21,24 @@ public interface EnviormentDAO {
     @Insert
     void insertLandType(int landType);
 
-    //@Query("SELECT * FROM enviorment WHERE 1==1")
-    //int
+    @Query("DELETE FROM enviorment")
+    void deleteAll();
+
+    @Query("SELECT landBin FROM enviorment")
+    int getLandType();
+
+    @Query("SELECT genBin FROM enviorment")
+    int getGenerationNum();
+
+    @Query("SELECT currentRandomEventTypeBin FROM enviorment")
+    int getCurrentRandomEventType();
+
+    @Query("SELECT randomEventDurationLeftBin FROM enviorment")
+    int getRandomEventDurationLeft();
+
+    @Update
+    void updateCurrentRandomEventType(int currentRandomEventType);
+
+    @Update
+    void updateRandomEventDurationLeft(int randomEventDurationLeft);
 }

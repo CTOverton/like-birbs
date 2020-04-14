@@ -45,10 +45,18 @@ public abstract class EnviormentDatabase extends RoomDatabase {
 
     // then the code for updates/inserts/etc go here
 
+    /*
+        HERE
+        HERE
+        HERE
+        HERE
+        HERE
+        VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+     */
     public static void insertCurrentRandomEventType(int currentRandomEventType) {
         new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(int currentRandomEventType) {
-                INSTANCE.enviormentDAO().insertCurrentRandomEventType(currentRandomEventType);
+            protected Void doInBackground(Integer... currentEvent) {
+                INSTANCE.enviormentDAO().insertCurrentRandomEventType(currentEvent[0]);
                 return null;
             }
         }.execute(currentRandomEventType);

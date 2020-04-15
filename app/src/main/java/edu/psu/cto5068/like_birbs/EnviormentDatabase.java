@@ -7,12 +7,10 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-import java.lang.reflect.GenericArrayType;
-
 @Database(entities = {Enviorment.class}, version = 1, exportSchema = false)
 public abstract class EnviormentDatabase extends RoomDatabase {
     public interface EnviormentListener {
-        void onEnviormentReturn(int val);
+        void onEnviormentReturn(Enviorment myEnv);
     }
 
     public abstract EnviormentDAO enviormentDAO();
@@ -44,40 +42,13 @@ public abstract class EnviormentDatabase extends RoomDatabase {
             };
 
     // then the code for updates/inserts/etc go here
-    public static void insertCurrentRandomEventType(int currentRandomEventType) {
-        new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(Integer... currentEvent) {
-                INSTANCE.enviormentDAO().insertCurrentRandomEventType(currentEvent[0]);
+    public static void insert(Enviorment env) {
+        new AsyncTask<Enviorment, Void, Void>(){
+            protected Void doInBackground(Enviorment... env) {
+                INSTANCE.enviormentDAO().insert(env[0]);
                 return null;
             }
-        }.execute(currentRandomEventType);
-    }
-
-    public static void insertGenerationNum(int generationNum) {
-        new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(Integer... generationNum) {
-                INSTANCE.enviormentDAO().insertGenerationNum(generationNum[0]);
-                return null;
-            }
-        }.execute(generationNum);
-    }
-
-    public static void insertRandomEventDurationLeft(int randomEventDurationLeft) {
-        new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(Integer... randomEventDurationLeft) {
-                INSTANCE.enviormentDAO().insertRandomEventDurationLeft(randomEventDurationLeft[0]);
-                return null;
-            }
-        }.execute(randomEventDurationLeft);
-    }
-
-    public static void insertLandType(int landType) {
-        new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(Integer... landType) {
-                INSTANCE.enviormentDAO().insertLandType(landType[0]);
-                return null;
-            }
-        }.execute(landType);
+        }.execute(env);
     }
 
     public static void deleteAll() {
@@ -89,68 +60,23 @@ public abstract class EnviormentDatabase extends RoomDatabase {
         }.execute();
     }
 
-    public static void updateCurrentRandomEventType(int currentRandomEventType) {
-        new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(Integer... currentRandomEventType) {
-                INSTANCE.enviormentDAO().updateCurrentRandomEventType(currentRandomEventType[0]);
+    public static void update(Enviorment env) {
+        new AsyncTask<Enviorment, Void, Void>(){
+            protected Void doInBackground(Enviorment... env) {
+                INSTANCE.enviormentDAO().update(env[0]);
                 return null;
             }
-        }.execute(currentRandomEventType);
+        }.execute(env);
     }
 
-    public static void updateRandomEventDurationLeft(int randomEventDurationLeft) {
-        new AsyncTask<Integer, Void, Void>(){
-            protected Void doInBackground(Integer... randomEventDurationLeft) {
-                INSTANCE.enviormentDAO().updateRandomEventDurationLeft(randomEventDurationLeft[0]);
-                return null;
+    public static void getMostRecent(final EnviormentListener listener) {
+        new AsyncTask<Void, Void, Enviorment>(){
+            protected Enviorment doInBackground(Void... voids){
+                return INSTANCE.enviormentDAO().getMostRecent();
             }
-        }.execute(randomEventDurationLeft);
-    }
-
-    public static void getLandType(final EnviormentListener listener) {
-        new AsyncTask<Void, Void, Integer>(){
-            protected Integer doInBackground(Void... voids){
-                return INSTANCE.enviormentDAO().getLandType();
-            }
-            protected void onPostExecute(Integer LandType){
-                super.onPostExecute(LandType);
-                listener.onEnviormentReturn(LandType);
-            }
-        }.execute();
-    }
-
-    public static void getGenerationNum(final EnviormentListener listener) {
-        new AsyncTask<Void, Void, Integer>(){
-            protected Integer doInBackground(Void... voids){
-                return INSTANCE.enviormentDAO().getGenerationNum();
-            }
-            protected void onPostExecute(int GenerationNum){
-                super.onPostExecute(GenerationNum);
-                listener.onEnviormentReturn(GenerationNum);
-            }
-        }.execute();
-    }
-
-    public static void getCurrentRandomEventType(final EnviormentListener listener) {
-        new AsyncTask<Void, Void, Integer>(){
-            protected Integer doInBackground(Void... voids){
-                return INSTANCE.enviormentDAO().getCurrentRandomEventType();
-            }
-            protected void onPostExecute(int CurrentRandomEventType){
-                super.onPostExecute(CurrentRandomEventType);
-                listener.onEnviormentReturn(CurrentRandomEventType);
-            }
-        }.execute();
-    }
-
-    public static void getRandomEventDurationLeft(final EnviormentListener listener) {
-        new AsyncTask<Void, Void, Integer>(){
-            protected Integer doInBackground(Void... voids){
-                return INSTANCE.enviormentDAO().getRandomEventDurationLeft();
-            }
-            protected void onPostExecute(int RandomEventDurationLeft){
-                super.onPostExecute(RandomEventDurationLeft);
-                listener.onEnviormentReturn(RandomEventDurationLeft);
+            protected void onPostExecute(Enviorment env){
+                super.onPostExecute(env);
+                listener.onEnviormentReturn(env);
             }
         }.execute();
     }

@@ -17,4 +17,68 @@
         <item>24</item>
         <item>25</item>
     </string-array>
+
+    <string-array name="eventTitles">
+        <item>00 Placeholder title</item>
+        <item>01 Placeholder title</item>
+        <item>02 Placeholder title</item>
+        <item>03 Placeholder title</item>
+        <item>04 Placeholder title</item>
+        <item>05 Placeholder title</item>
+        <item>06 Placeholder title</item>
+        <item>07 Placeholder title</item>
+        <item>08 Placeholder title</item>
+        <item>09 Placeholder title</item>
+        <item>10 Placeholder title</item>
+        <item>11 Placeholder title</item>
+        <item>12 Placeholder title</item>
+    </string-array>
+
+    <string-array name="eventMessages">
+        <item>00 Nothing has happened. We thought we should let you know.</item>
+        <item>01 Nothing has happened. We thought we should let you know.</item>
+        <item>02 Nothing has happened. We thought we should let you know.</item>
+        <item>03 Nothing has happened. We thought we should let you know.</item>
+        <item>04 Nothing has happened. We thought we should let you know.</item>
+        <item>05 Nothing has happened. We thought we should let you know.</item>
+        <item>06 Nothing has happened. We thought we should let you know.</item>
+        <item>07 Nothing has happened. We thought we should let you know.</item>
+        <item>08 Nothing has happened. We thought we should let you know.</item>
+        <item>09 Nothing has happened. We thought we should let you know.</item>
+        <item>10 Nothing has happened. We thought we should let you know.</item>
+        <item>11 Nothing has happened. We thought we should let you know.</item>
+        <item>12 Nothing has happened. We thought we should let you know.</item>
+    </string-array>
+
+    <string-array name="eventPositive">
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Cool</item>
+        <item>Mess with ship</item>
+        <item>Cool</item>
+        <item>Cool</item>
+    </string-array>
+
+    <string-array name="eventNegative">
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>cancel</item>
+        <item>Don't mess with ship</item>
+        <item>cancel</item>
+        <item>cancel</item>
+    </string-array>
 </resources>

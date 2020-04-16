@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
@@ -174,13 +175,22 @@ public class Game extends AppCompatActivity implements DisplayEventDialog.EventD
                 // Todo things happen on environment
                 // Todo Show dialog based on random event
 
-                Bundle args = new Bundle();
-                args.putString("title", "Example Title");
-                args.putString("message", "Example Message");
 
-                DialogFragment d = new DisplayEventDialog();
-                d.setArguments(args);
-                d.show(getSupportFragmentManager(), "eventDialog");
+
+                int randomEvent = 0; // TODO: make this connect to environment
+
+                if (randomEvent != Enviorment.NO_EVENT) {
+                    Bundle args = new Bundle();
+                    args.putString("title", getResources().getStringArray(R.array.eventTitles)[randomEvent]);
+                    args.putString("message", getResources().getStringArray(R.array.eventMessages)[randomEvent]);
+
+                    args.putString("posButton", getResources().getStringArray(R.array.eventPositive)[randomEvent]);
+                    args.putString("negButton", getResources().getStringArray(R.array.eventNegative)[randomEvent]);
+
+                    DialogFragment d = new DisplayEventDialog();
+                    d.setArguments(args);
+                    d.show(getSupportFragmentManager(), "eventDialog");
+                }
 
                 break;
             case (R.id.main_menu):

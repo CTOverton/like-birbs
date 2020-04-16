@@ -36,15 +36,18 @@ public class DisplayEventDialog extends DialogFragment {
         String title = getArguments().getString("title");
         String message = getArguments().getString("message");
 
+        String posButton = getArguments().getString("posButton");
+        String negButton = getArguments().getString("negButton");
+
         builder
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("Punchline", new DialogInterface.OnClickListener() {
+                .setPositiveButton(posButton, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onDialogPositiveClick(DisplayEventDialog.this);
                     }
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton(negButton, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onDialogNegativeClick(DisplayEventDialog.this);
                     }

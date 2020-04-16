@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +12,13 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
 
+import edu.psu.cto5068.like_birbs.game.DisplayEventDialog;
+
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class Game extends AppCompatActivity {
+public class Game extends AppCompatActivity implements DisplayEventDialog.EventDialogListener {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -168,6 +171,17 @@ public class Game extends AppCompatActivity {
                 break;
             case (R.id.next_gen):
                 // code view go to next gen
+                // Todo things happen on environment
+                // Todo Show dialog based on random event
+
+                Bundle args = new Bundle();
+                args.putString("title", "Example Title");
+                args.putString("message", "Example Message");
+
+                DialogFragment d = new DisplayEventDialog();
+                d.setArguments(args);
+                d.show(getSupportFragmentManager(), "eventDialog");
+
                 break;
             case (R.id.main_menu):
                 // launch dialog asking to save / no save and quit
@@ -178,5 +192,16 @@ public class Game extends AppCompatActivity {
                 // error
                 break;
         }
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        // Todo: Handle positive action
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        // Todo: Handle negative action
     }
 }

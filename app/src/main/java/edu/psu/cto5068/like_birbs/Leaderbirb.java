@@ -2,19 +2,39 @@ package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ListView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import edu.psu.cto5068.like_birbs.leaderbirb.HighScore;
+import edu.psu.cto5068.like_birbs.leaderbirb.ScoreListAdapter;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class Leaderbirb extends AppCompatActivity {
+
+    private static final String USER_KEY = "username";
+    private static final String SCORE_KEY = "score";
+    private DocumentReference mDocRef = FirebaseFirestore.getInstance().collection("scores").document("test");
+
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -93,6 +113,18 @@ public class Leaderbirb extends AppCompatActivity {
 
         mVisible = true;
 
+        ListView mListView = findViewById(R.id.listView);
+        HighScore c = new HighScore("Christian", 100);
+        HighScore j = new HighScore("Jacob", 200);
+        HighScore a = new HighScore("Ariel", 300);
+
+        ArrayList<HighScore> highScoreList = new ArrayList<>();
+        highScoreList.add(c);
+        highScoreList.add(j);
+        highScoreList.add(a);
+
+        ScoreListAdapter adapter = new ScoreListAdapter(this, R.layout.leaderbirb_adapter_view, highScoreList);
+        mListView.setAdapter(adapter);
     }
 
     @Override
@@ -135,5 +167,22 @@ public class Leaderbirb extends AppCompatActivity {
      */
     private void delayedHide(int delayMillis) {
 
+    }
+
+    public void saveScore(View view) {
+        Map<String, Object> dataToSave = new HashMap<String, Object>();
+        dataToSave.put(SCORE_KEY, 400);
+        dataToSave.put(USER_KEY, "Christian");
+        mDocRef.set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("tag", "Document has been saved!");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("tag", "Document was not saved!", e);
+            }
+        });
     }
 }

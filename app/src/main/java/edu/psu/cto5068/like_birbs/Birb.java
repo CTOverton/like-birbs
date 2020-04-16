@@ -162,7 +162,7 @@ public class Birb {
 
     }
     // Reproduction Constructor (used on each generation)
-    public Birb(Birb parent1, Birb parent2) {
+    public Birb(Birb parent1, Birb parent2, boolean radioactive) {
         // Pre-Mutation
         this.strength    = new int[16];
         this.speed       = new int[16];
@@ -239,11 +239,17 @@ public class Birb {
          */
 
         // Using 160 so it can be used both as the index for mutation AND as a 10% Roll
-        int strengthRoll = (int) (Math.random() * 160);
-        int speedRoll    = (int) (Math.random() * 160);
-        int colorRoll    = (int) (Math.random() * 150);
-        int featherRoll  = (int) (Math.random() * 160);
-        int swimmingRoll = (int) (Math.random() * 160);
+        int mutationRollRange      = 160;
+        int mutationRollRangeColor = 150;
+        if (radioactive) {
+            mutationRollRange /= 2;
+            mutationRollRangeColor /= 2;
+        }
+        int strengthRoll = (int) (Math.random() * mutationRollRange);
+        int speedRoll    = (int) (Math.random() * mutationRollRange);
+        int colorRoll    = (int) (Math.random() * mutationRollRangeColor);
+        int featherRoll  = (int) (Math.random() * mutationRollRange);
+        int swimmingRoll = (int) (Math.random() * mutationRollRange);
 
         if (strengthRoll < 16) {
             if (this.strength[strengthRoll] == 0) {

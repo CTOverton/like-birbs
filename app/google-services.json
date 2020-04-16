@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "246301202402",
+    "firebase_url": "https://like-birbs.firebaseio.com",
+    "project_id": "like-birbs",
+    "storage_bucket": "like-birbs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246301202402:android:db7002f4295e49e4b84bbb",
+        "android_client_info": {
+          "package_name": "edu.psu.cto5068.like_birbs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246301202402-2udqam91l3sa06ripph4gukf1n550ve0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC85vOLu1GltEDFZfwS1L_O8Y6T42_1c30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246301202402-2udqam91l3sa06ripph4gukf1n550ve0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

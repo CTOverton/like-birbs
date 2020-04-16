@@ -3,9 +3,11 @@ package edu.psu.cto5068.like_birbs;
 import android.annotation.SuppressLint;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -15,11 +17,19 @@ import android.widget.ListView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import edu.psu.cto5068.like_birbs.leaderbirb.HighScore;
@@ -33,7 +43,9 @@ public class Leaderbirb extends AppCompatActivity {
 
     private static final String USER_KEY = "username";
     private static final String SCORE_KEY = "score";
-    private DocumentReference mDocRef = FirebaseFirestore.getInstance().collection("scores").document("test");
+    private static final String TAG = "Leaderbirb";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DocumentReference mDocRef = db.collection("scores").document("test");
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -113,18 +125,31 @@ public class Leaderbirb extends AppCompatActivity {
 
         mVisible = true;
 
-        ListView mListView = findViewById(R.id.listView);
-        HighScore c = new HighScore("Christian", 100);
-        HighScore j = new HighScore("Jacob", 200);
-        HighScore a = new HighScore("Ariel", 300);
+        final ListView mListView = findViewById(R.id.listView);
+        final Context mContext = this;
 
-        ArrayList<HighScore> highScoreList = new ArrayList<>();
-        highScoreList.add(c);
-        highScoreList.add(j);
-        highScoreList.add(a);
+        db.collection("highscores")
+                .orderBy("score", Query.Direction.DESCENDING)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
 
-        ScoreListAdapter adapter = new ScoreListAdapter(this, R.layout.leaderbirb_adapter_view, highScoreList);
-        mListView.setAdapter(adapter);
+                        List<HighScore> highscores = new ArrayList<>();
+                        for (QueryDocumentSnapshot doc : value) {
+                            if (doc.get("username") != null) {
+                                highscores.add(new HighScore(doc.getString("username"), doc.getLong("score").intValue()));
+                            }
+                        }
+                        Log.d(TAG, "Current highscores: " + highscores);
+                        ScoreListAdapter adapter = new ScoreListAdapter(mContext, R.layout.leaderbirb_adapter_view, highscores);
+                        mListView.setAdapter(adapter);
+                    }
+                });
     }
 
     @Override

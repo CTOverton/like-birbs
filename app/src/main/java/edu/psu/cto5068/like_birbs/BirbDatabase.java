@@ -20,7 +20,7 @@ public abstract class BirbDatabase extends RoomDatabase {
     public abstract BirbDAO birbDAO();
     private static BirbDatabase INSTANCE;
 
-    public static synchronized BirbDatabase getDatabse(final Context context)  {
+    public static synchronized BirbDatabase getDatabase(final Context context)  {
         if (INSTANCE == null) {
             synchronized (BirbDatabase.class) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
@@ -88,5 +88,14 @@ public abstract class BirbDatabase extends RoomDatabase {
                 return null;
             }
         }.execute(birbs);
+    }
+
+    public static void nukeAll() {
+        new AsyncTask<Void, Void, Void>() {
+            protected Void doInBackground(Void... voids) {
+                INSTANCE.birbDAO().nukeAll();
+                return null;
+            }
+        }.execute();
     }
 }

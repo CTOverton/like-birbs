@@ -104,7 +104,7 @@ public class Birb {
         int tempBinStringLength = tempBinString.length();
         this.strength = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.strength[i] = 0;
             }
             else {
@@ -116,7 +116,7 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.speed = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.speed[i] = 0;
             }
             else {
@@ -128,7 +128,7 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.feathers = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.feathers[i] = 0;
             }
             else {
@@ -140,7 +140,7 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.color = new int[15];
         for (int i = 0; i < 15; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.color[i] = 0;
             }
             else {
@@ -152,7 +152,7 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.swimming = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.swimming[i] = 0;
             }
             else {
@@ -169,6 +169,7 @@ public class Birb {
         this.feathers    = new int[16];
         this.color       = new int[15];
         this.swimming    = new int[16];
+        this.id          = (int) (Math.random() * Integer.MAX_VALUE);
 
         int strengthSplit    = (int) (Math.random() * 16);
         int speedSplit       = (int) (Math.random() * 16);

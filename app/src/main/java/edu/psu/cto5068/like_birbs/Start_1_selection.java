@@ -146,26 +146,29 @@ public class Start_1_selection extends AppCompatActivity {
 
     public void selectEnv(View view) {
         int buttonId = view.getId();
-
+        int envSelection = 0;
+        EnviormentDatabase.getDatabase(this);
+        EnviormentDatabase.deleteAll();
         switch (buttonId) {
             case (R.id.meadowButton):
-                // do stuff for setting enviorment object
+                envSelection = 1;
                 break;
             case (R.id.islandButton):
-                // do stuff for setting enviorment object
+                envSelection = 4;
                 break;
             case (R.id.snowButton):
-                // do stuff for setting enviorment object
+                envSelection = 3;
                 break;
             case (R.id.desertButton):
-                // do stuff for setting enviorment object
+                envSelection = 2;
                 break;
             default:
-                // error
+                envSelection = 0;
                 break;
         }
 
         Intent nextScreenIntent = new Intent(this, Start_2_customize_birb.class);
+        nextScreenIntent.putExtra("env", envSelection);
         startActivity(nextScreenIntent);
 
     }

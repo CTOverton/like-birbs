@@ -25,4 +25,7 @@ public interface BirbDAO {
 
     @Query("DELETE FROM birbs WHERE id = :id")
     void delete(int id);
+
+    @Query("DELETE FROM birbs WHERE 1=1")
+    void nukeAll();
 }

@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.ArrayList;
 
 import edu.psu.cto5068.like_birbs.game.DisplayEventDialog;
 import edu.psu.cto5068.like_birbs.game.DisplayLogDialog;
@@ -44,6 +47,11 @@ public class Game extends AppCompatActivity
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+
+    private int[][] initialBirbs = new int[10][6];
+    private String[] initialBirbsNames;
+    private Enviorment env;
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -98,21 +106,46 @@ public class Game extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.wtf("Help", "OnCreate Called");
         setContentView(R.layout.activity_game);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-
-        // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
+        Object[] birbsAreNotObjects = (Object[]) getIntent().getExtras().getSerializable("birbPercents");
+        if (birbsAreNotObjects != null) {
+            for (int i = 0; i < birbsAreNotObjects.length; i++) {
+                initialBirbs[i] = (int[]) birbsAreNotObjects[i];
             }
-        });
+        }
+        initialBirbsNames = getIntent().getStringArrayExtra("birbNames");
+
+        ArrayList<Birb> initBirbs = new ArrayList<>();
+        BirbDatabase.getDatabase(this);
+        EnviormentDatabase.getDatabase(this);
+
+        for (int i = 0; i < initialBirbs.length; i++) {
+            int dummyStr = (initialBirbs[i][0] * 65_536);
+            int dummySpd = (initialBirbs[i][1] * 65_536);
+            int dummyFth = (initialBirbs[i][2] * 65_536);
+            int dummyCol = (initialBirbs[i][3] * 32_767);
+            int dummySwm = (initialBirbs[i][4] * 65_536);
+
+            String dummyName = initialBirbsNames[i];
+
+            // there HAS to be a better way to do this
+            int dummyId = (int) (Math.random() * Integer.MAX_VALUE);
+
+            initBirbs.add(new Birb(dummyId, dummyStr, dummySpd, dummyFth, dummyCol, dummySwm, new boolean[]{false, false}, dummyName));
+            System.out.println(i);
+            BirbDatabase.insert(initBirbs.get(i));
+        }
+        if (getIntent().getIntExtra("env", -1) != -1) {
+            env = new Enviorment(initBirbs, getIntent().getIntExtra("env", -1));
+            EnviormentDatabase.insert(env);
+        }
+
     }
 
     @Override
@@ -139,12 +172,8 @@ public class Game extends AppCompatActivity
         if (actionBar != null) {
             actionBar.hide();
         }
-        mControlsView.setVisibility(View.GONE);
         mVisible = false;
 
-        // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
@@ -175,17 +204,26 @@ public class Game extends AppCompatActivity
             case (R.id.view_logs):
                 // code to view logs
 
-
-
                 break;
             case (R.id.next_gen):
                 // code view go to next gen
                 // Todo things happen on environment
                 // Todo Show dialog based on random event
+                env.birbsEat();
+                env.strongBirbsTakeFood();
+                env.birbsStarve();
+                env.predatorsEat();
+                env.birbsTemperature();
+                env.birbsDrown();
 
+                if (env.enoughToReproduce()) {
+                    env.birbsShuffle();
+                    env.birbsReproduce();
+                }
+                env.increaseAliveTime();
+                env.incrementGeneration();
 
-
-                int randomEvent = 0; // TODO: make this connect to environment
+                int randomEvent = env.randomEvent();
 
                 if (randomEvent != Enviorment.NO_EVENT) {
                     Bundle args = new Bundle();
@@ -198,6 +236,22 @@ public class Game extends AppCompatActivity
                     DialogFragment d = new DisplayEventDialog();
                     d.setArguments(args);
                     d.show(getSupportFragmentManager(), "eventDialog");
+                }
+
+                BirbDatabase.nukeAll();
+                ArrayList<Birb> tempBirbs = env.getBirbs();
+
+                for (Birb birb : tempBirbs) {
+                    BirbDatabase.insert(birb);
+                }
+
+                EnviormentDatabase.insert(env);
+
+                System.out.println(tempBirbs.size());
+                if (tempBirbs.size() == 0) {
+                    Intent gameOver = new Intent(this, Game_over.class);
+                    gameOver.putExtra("totalGens", env.getGenerationNum());
+                    startActivity(gameOver);
                 }
 
                 break;

@@ -19,66 +19,66 @@
     </string-array>
 
     <string-array name="eventTitles">
-        <item>00 Placeholder title</item>
-        <item>01 Placeholder title</item>
-        <item>02 Placeholder title</item>
-        <item>03 Placeholder title</item>
-        <item>04 Placeholder title</item>
-        <item>05 Placeholder title</item>
-        <item>06 Placeholder title</item>
-        <item>07 Placeholder title</item>
-        <item>08 Placeholder title</item>
-        <item>09 Placeholder title</item>
-        <item>10 Placeholder title</item>
-        <item>11 Placeholder title</item>
-        <item>12 Placeholder title</item>
+        <item>This will never occur (ideally)</item>
+        <item>INCREASED VEGETATION</item>
+        <item>INCREASED PREY</item>
+        <item>HEAT WAVE</item>
+        <item>COLD SNAP</item>
+        <item>INCREASED PREDATOR PRESENCE</item>
+        <item>MONSOON</item>
+        <item>NUCLEAR POWER PLANT MELTDOWN</item>
+        <item>PANDEMIC</item>
+        <item>LOVE IS IN THE AIR</item>
+        <item>CRASHED CARGO SHIP</item>
+        <item>PLANT LIFE BLIGHT</item>
+        <item>PREY VANISHES</item>
     </string-array>
 
     <string-array name="eventMessages">
-        <item>00 Nothing has happened. We thought we should let you know.</item>
-        <item>01 Nothing has happened. We thought we should let you know.</item>
-        <item>02 Nothing has happened. We thought we should let you know.</item>
-        <item>03 Nothing has happened. We thought we should let you know.</item>
-        <item>04 Nothing has happened. We thought we should let you know.</item>
-        <item>05 Nothing has happened. We thought we should let you know.</item>
-        <item>06 Nothing has happened. We thought we should let you know.</item>
-        <item>07 Nothing has happened. We thought we should let you know.</item>
-        <item>08 Nothing has happened. We thought we should let you know.</item>
-        <item>09 Nothing has happened. We thought we should let you know.</item>
-        <item>10 Nothing has happened. We thought we should let you know.</item>
-        <item>11 Nothing has happened. We thought we should let you know.</item>
-        <item>12 Nothing has happened. We thought we should let you know.</item>
+        <item>Nothing has happened. We thought we should let you know.</item>
+        <item>Something is causing the wild vegetation to grow at a faster rate.  There will be more plant life for the Birbs to eat for a few generations </item>
+        <item>Small animals appear to be more plentiful.  The Carnivorous Birbs will have more food for a few generations.</item>
+        <item>A heat wave is making its way through this area.  The temperature will be higher for a few generations.</item>
+        <item>A cold snap has struck this area.  The temperature will be lower for a few generations.</item>
+        <item>A pack of roving predators have arrived area.  They appear hungry.</item>
+        <item>A Monsoon has arrived! There will be flooding.  Better hope the birbs can swim!</item>
+        <item>A catastrophe as struck! After a violent explosion, radioactive fallout will cause the birbs to mutate at a faster rate (for better or for worse).</item>
+        <item>The Birb Flu has begun affecting the population of birbs.  Nothing they can do except ride it out for a few generations.</item>
+        <item>Something in the air is causing the birbs to reproduce more, these few generations will be known as the "Birby Boomers"</item>
+        <item>A cargo ship has crashed in this location!  Should the birbs investigate the ship or leave it alone?</item>
+        <item>Something is now killing the vegetation in the area.  The birbs will have a hard time obtaining non-meat food.</item>
+        <item>Something has killed many of the small animals the carnivorous birbs like to hunt.  They will have a hard time finding food.</item>
     </string-array>
 
     <string-array name="eventPositive">
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
-        <item>Cool</item>
+        <item>Something Broke</item>
+        <item>GREAT!</item>
+        <item>GREAT!</item>
+        <item>That\'s Fine</item>
+        <item>That\'s Fine</item>
+        <item>This is REALLY not okay</item>
+        <item>That\'s Fine</item>
+        <item>I needed a change anyway</item>
+        <item>More the Merrier!</item>
+        <item>Hope they have masks</item>
         <item>Mess with ship</item>
-        <item>Cool</item>
-        <item>Cool</item>
+        <item>This is REALLY bad</item>
+        <item>This is REALLY bad</item>
     </string-array>
 
     <string-array name="eventNegative">
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>cancel</item>
-        <item>Don't mess with ship</item>
-        <item>cancel</item>
-        <item>cancel</item>
+        <item>Something broke</item>
+        <item>Okay</item>
+        <item>Okay</item>
+        <item>Oh No!</item>
+        <item>Oh No!</item>
+        <item>This is not okay</item>
+        <item>Oh No!</item>
+        <item>This ruins everything!</item>
+        <item>This is problematic</item>
+        <item>They\'ll get over it</item>
+        <item>Don\'t mess with ship</item>
+        <item>This is pretty bad</item>
+        <item>This is pretty bad</item>
     </string-array>
 </resources>

@@ -5,10 +5,15 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -34,6 +39,15 @@ public class Start_2_customize_birb extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private BirbNameGenerator names;
+
+    // TODO: These will need to be persist locally in the activity
+    private int enviormentChoice;
+    private int[][] initialBirbPercents = new int[10][5];
+    private String[] birbNames = new String[10];
+    private int birbsMade = 0;
+    // End TODO
+
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -92,6 +106,8 @@ public class Start_2_customize_birb extends AppCompatActivity {
         setContentView(R.layout.activity_start_2_customize_birb);
 
         mVisible = true;
+        names = new BirbNameGenerator();
+        enviormentChoice = getIntent().getIntExtra("env", 0);
     }
 
     @Override
@@ -141,5 +157,57 @@ public class Start_2_customize_birb extends AppCompatActivity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    public void onClick(View view) {
+        int clickId = view.getId();
+
+        switch (clickId) {
+            case(R.id.imageView_birb):
+                ((TextView) findViewById(R.id.textView_birbname)).setText(names.getRandomName());
+                break;
+            case(R.id.exit_button):
+                Intent back = new Intent(this, Start_1_selection.class);
+                startActivity(back);
+                break;
+            case(R.id.done_button):
+                initialBirbPercents[birbsMade][0] = ((SeekBar) findViewById(R.id.seekBar_strength)).getProgress();
+                initialBirbPercents[birbsMade][1] = ((SeekBar) findViewById(R.id.seekBar_speed)).getProgress();
+                initialBirbPercents[birbsMade][2] = ((SeekBar) findViewById(R.id.seekBar_feathers)).getProgress();
+                initialBirbPercents[birbsMade][3] = ((SeekBar) findViewById(R.id.seekBar_body_color)).getProgress();
+                initialBirbPercents[birbsMade][4] = ((SeekBar) findViewById(R.id.seekBar_swim)).getProgress();
+                birbNames[birbsMade] = ((TextView) findViewById(R.id.textView_birbname)).getText().toString();
+                Toast.makeText(this, "Birb " + birbNames[birbsMade] + " Spawned!", Toast.LENGTH_LONG).show();
+
+                birbsMade++;
+
+
+                if (birbsMade == 10) {
+                    Intent startGame = new Intent(this, Game.class);
+                    Bundle birbBundle = new Bundle();
+                    birbBundle.putSerializable("birbPercents", initialBirbPercents);
+                    startGame.putExtra("birbBundle", birbBundle);
+                    startGame.putExtra("birbNames", birbNames);
+                    startGame.putExtra("env", enviormentChoice);
+                    startActivity(startGame);
+
+                    for (int i = 0; i < 10; i++) {
+                        System.out.println(birbNames[i]);
+                        for (int j = 0; j < 5; j++) {
+                            System.out.print(initialBirbPercents[i][j] + " ");
+                        }
+                        System.out.println();
+                    }
+                    BirbDatabase.getDatabase(this);
+                    BirbDatabase.nukeAll();
+                }
+                else {
+                    ((TextView) findViewById(R.id.textView_birbnum)).setText((birbsMade + 1) + "/10");
+                }
+
+            default:
+                break;
+
+        }
     }
 }

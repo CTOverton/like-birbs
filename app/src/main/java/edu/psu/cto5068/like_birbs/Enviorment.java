@@ -6,6 +6,8 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
 /*
      HOW RNG ROLLS WORK FOR ENVIORMENT - Jacob's RNG Magic 2.0
         Birb Range will be from 0 -> 65,536 (because 16 bit integer)
@@ -129,8 +131,9 @@ public class Enviorment {
     public static final int FAMINE_MEAT_EVENT         = 12;
 
     public Enviorment(ArrayList<Birb> initPopulation, int envType) {
-        birbs = new ArrayList<>(initPopulation);
-        log = new BirbLog();
+        this.birbs = new ArrayList<>(initPopulation);
+        this.generationNum = 0;
+        this.log = new BirbLog();
 
         /*
          *   Enviorment type key :
@@ -208,7 +211,8 @@ public class Enviorment {
 
         do {
             allEaten = true;
-            for (Birb birb : birbs) {
+            for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+                Birb birb = birbIter.next();
                 if (birb.getSpeedDecimal() > fastestSpeed && !birb.isHasPlantFood() && !birb.isCarniverous()) {
                     allEaten = false;
                     fastestSpeed = birb.getSpeedDecimal();
@@ -221,13 +225,15 @@ public class Enviorment {
                 birbs.get(fastestIndx).setHasPlantFood(true);
                 tempVegAmount--;
                 fastestSpeed = -1;
+                counter = 0;
             }
         } while (!allEaten && tempVegAmount != 0);
 
         // Carniverous Birbs
         do {
             allEaten = true;
-            for (Birb birb : birbs) {
+            for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+                Birb birb = birbIter.next();
                 if (birb.getSpeedDecimal() > fastestSpeed && !birb.isHasMeatFood() && birb.isCarniverous()) {
                     allEaten = false;
                     fastestSpeed = birb.getSpeedDecimal();
@@ -245,7 +251,8 @@ public class Enviorment {
 
         // Cannibal Birbs
 
-        for (Birb birb: birbs) {
+        for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+            Birb birb = birbIter.next();
             if (birb.isCannibalistic() && !birb.isHasMeatFood()){
                 int victimIndx;
                 boolean done = false;
@@ -271,8 +278,10 @@ public class Enviorment {
     public void strongBirbsTakeFood() {
         int succRange = 0;
         int birbStrengthDiff = 0;
-        for (Birb aggressor : birbs) {
-            for (Birb victim : birbs) {
+        for (Iterator<Birb> aggressorIter = birbs.iterator(); aggressorIter.hasNext();) {
+            Birb aggressor = aggressorIter.next();
+            for (Iterator<Birb> victimIter = birbs.iterator(); victimIter.hasNext();) {
+                Birb victim = victimIter.next();
                 if (aggressor != victim) {
                     if ((victim.isHasPlantFood() && !aggressor.isCarniverous() && !aggressor.isHasPlantFood()) ||
                         (victim.isHasMeatFood() && aggressor.isCarniverous() && !aggressor.isHasMeatFood())) {
@@ -332,10 +341,11 @@ public class Enviorment {
     }
 
     public void birbsStarve() {
-        for (Birb birb : birbs) {
+        for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+            Birb birb = birbIter.next();
             if (!birb.isHasMeatFood() && !birb.isHasPlantFood()) {
                 log.addDeath(birb.getName(), BirbLog.HUNGER_DEATH, birb.getGenerationsAlive());
-                birbs.remove(birb);
+                birbIter.remove();
             }
         }
     }
@@ -350,7 +360,8 @@ public class Enviorment {
      */
     public void predatorsEat() {
         // TODO:
-        for (Birb birb : birbs) {
+        for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+            Birb birb = birbIter.next();
             int succRange = (int) (Math.random() * 100);
             int idealColor;
             int[] predatorDetection;
@@ -442,28 +453,28 @@ public class Enviorment {
                     if (!(predatorSpeed - 5000 < birb.getSpeedDecimal() &&
                         birb.getSpeedDecimal() < predatorSpeed + 5000)) {
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
                 else if (succRange < 79) {
                     if (!(predatorSpeed - 8000 < birb.getSpeedDecimal() &&
                             birb.getSpeedDecimal() < predatorSpeed + 8000)) {
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
                 else if (succRange < 95) {
                     if (!(predatorSpeed - 10000 < birb.getSpeedDecimal() &&
                             birb.getSpeedDecimal() < predatorSpeed + 10000)) {
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
                 else {
                     if (!(predatorSpeed - 15000 < birb.getSpeedDecimal() &&
                             birb.getSpeedDecimal() < predatorSpeed + 15000)) {
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
             }
@@ -485,7 +496,8 @@ public class Enviorment {
         }
         // Survival range
         int succRange;
-        for (Birb birb: birbs) {
+        for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+            Birb birb = birbIter.next();
             succRange = (int) (Math.random() * 100);
 
             if (succRange < 50) {
@@ -496,10 +508,10 @@ public class Enviorment {
                     } else {
                         log.addDeath(birb.getName(), BirbLog.HYPOTHERMIA_DEATH, birb.getGenerationsAlive());
                     }
-                    birbs.remove(birb);
+                    birbIter.remove();
                 }
             }
-            if (succRange < 79) {
+            else if (succRange < 79) {
                 if (!(targetDecFeathers - 8000 < birb.getFeathersDecimal() &&
                         birb.getFeathersDecimal() < targetDecFeathers + 8000)) {
                     if (birb.getFeathersDecimal() > targetDecFeathers + 8000) {
@@ -507,10 +519,10 @@ public class Enviorment {
                     } else {
                         log.addDeath(birb.getName(), BirbLog.HYPOTHERMIA_DEATH, birb.getGenerationsAlive());
                     }
-                    birbs.remove(birb);
+                    birbIter.remove();
                 }
             }
-            if (succRange < 95) {
+            else if (succRange < 95) {
                 if (!(targetDecFeathers - 10000 < birb.getFeathersDecimal() &&
                         birb.getFeathersDecimal() < targetDecFeathers + 10000)) {
                     if (birb.getFeathersDecimal() > targetDecFeathers + 10000) {
@@ -518,7 +530,7 @@ public class Enviorment {
                     } else {
                         log.addDeath(birb.getName(), BirbLog.HYPOTHERMIA_DEATH, birb.getGenerationsAlive());
                     }
-                    birbs.remove(birb);
+                    birbIter.remove();
                 }
             }
             else {
@@ -530,7 +542,7 @@ public class Enviorment {
                     else {
                         log.addDeath(birb.getName(), BirbLog.HYPOTHERMIA_DEATH, birb.getGenerationsAlive());
                     }
-                    birbs.remove(birb);
+                    birbIter.remove();
                 }
             }
         }
@@ -548,33 +560,34 @@ public class Enviorment {
                 this.randomEventDurationLeft--;
             }
 
-            for (Birb birb : birbs) {
+            for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+                Birb birb = birbIter.next();
                 if (succRange < 50) {
                     if (!(waterLevels - 5000 < birb.getSwimmingDecimal() &&
                             birb.getSwimmingDecimal() < waterLevels + 5000)) {
                         log.addDeath(birb.getName(), BirbLog.DROWNING_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
                 else if (succRange < 79) {
                     if (!(waterLevels - 8000 < birb.getSwimmingDecimal() &&
                             birb.getSwimmingDecimal() < waterLevels + 8000)) {
                         log.addDeath(birb.getName(), BirbLog.DROWNING_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
                 else if (succRange < 95) {
                     if (!(waterLevels - 10000 < birb.getSwimmingDecimal() &&
                             birb.getSwimmingDecimal() < waterLevels + 10000)) {
                         log.addDeath(birb.getName(), BirbLog.DROWNING_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
                 else {
                     if (!(waterLevels - 15000 < birb.getSwimmingDecimal() &&
                             birb.getSwimmingDecimal() < waterLevels + 15000)) {
                         log.addDeath(birb.getName(), BirbLog.DROWNING_DEATH, birb.getGenerationsAlive());
-                        birbs.remove(birb);
+                        birbIter.remove();
                     }
                 }
             }
@@ -654,11 +667,12 @@ public class Enviorment {
         }
         else if (currentRandomEventType == PANDEMIC_EVENT) { //  Birb Flu
             int decemator; // 1/10 chance of dying of birb flu
-            for (Birb birb: birbs) {
+            for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
+                Birb birb = birbIter.next();
                 decemator = (int) (Math.random() * 10);
                 if (decemator == 0) {
                     log.addDeath(birb.getName(), BirbLog.PANDEMIC_DEATH, birb.getGenerationsAlive());
-                    birbs.remove(birb);
+                    birbIter.remove();
                 }
             }
             this.randomEventDurationLeft--;
@@ -671,5 +685,13 @@ public class Enviorment {
         }
 
         return 0;
+    }
+
+    public ArrayList<Birb> getBirbs() {
+        return this.birbs;
+    }
+
+    public void incrementGeneration() {
+        this.generationNum++;
     }
 }

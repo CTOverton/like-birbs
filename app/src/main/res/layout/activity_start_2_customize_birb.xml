@@ -159,30 +159,24 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Next"
-                        android:textColor="#FFF"
-                        android:background="@drawable/round_button"
-                        android:backgroundTint="#3F51B5"
-                        android:backgroundTintMode="add"/>
-
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Done"
-                        android:textColor="#FFF"
-                        android:background="@drawable/round_button"
-                        android:backgroundTint="#3F51B5"
-                        android:backgroundTintMode="add"/>
-
-                    <Button
+                        android:id="@+id/exit_button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="Exit"
+                        android:onClick="onClick"
+                        android:textColor="#FFF"
+                        android:background="@drawable/round_button"
+                        android:backgroundTint="#3F51B5"
+                        android:backgroundTintMode="add"/>
+
+                    <Button
+                        android:id="@+id/done_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Done"
+                        android:onClick="onClick"
                         android:textColor="#FFF"
                         android:background="@drawable/round_button"
                         android:backgroundTint="#3F51B5"
@@ -221,6 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="24dp"
+                    android:onClick="onClick"
                     app:srcCompat="@drawable/birb_the_perfect_birb" />
             </LinearLayout>
 

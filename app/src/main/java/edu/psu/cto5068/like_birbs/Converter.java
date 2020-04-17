@@ -18,8 +18,9 @@ public class Converter {
     @TypeConverter
     public static String fromArr(int binArry[]) {
         String binStr = "";
-        for (int i = 0; i < 16; i++) {
-            if (i != 15) {
+        int length = binArry.length;
+        for (int i = 0; i < length; i++) {
+            if (i != length - 1) {
                 binStr = binStr + binArry[i] + "-";
             }
             else {

@@ -14,12 +14,17 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import edu.psu.cto5068.like_birbs.game.DisplayEventDialog;
+import edu.psu.cto5068.like_birbs.game.DisplayLogDialog;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class Game extends AppCompatActivity implements DisplayEventDialog.EventDialogListener {
+public class Game extends AppCompatActivity
+        implements DisplayEventDialog.EventDialogListener,
+        DisplayLogDialog.LogDialogListener
+
+{
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -169,6 +174,9 @@ public class Game extends AppCompatActivity implements DisplayEventDialog.EventD
         switch (id) {
             case (R.id.view_logs):
                 // code to view logs
+
+
+
                 break;
             case (R.id.next_gen):
                 // code view go to next gen
@@ -212,6 +220,16 @@ public class Game extends AppCompatActivity implements DisplayEventDialog.EventD
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
+        // Todo: Handle negative action
+    }
+
+    @Override
+    public void onLogDialogPositiveClick(DialogFragment dialog) {
+        // Todo: Handle positive action
+    }
+
+    @Override
+    public void onLogDialogNegativeClick(DialogFragment dialog) {
         // Todo: Handle negative action
     }
 }

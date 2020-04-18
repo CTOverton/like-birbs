@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
@@ -48,9 +49,12 @@ public class Game extends AppCompatActivity
     private final Handler mHideHandler = new Handler();
     private View mContentView;
 
+    // Jacob's Stuff
     private int[][] initialBirbs = new int[10][6];
     private String[] initialBirbsNames;
     private Enviorment env;
+    private int[] birbImages;
+    //
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -113,11 +117,8 @@ public class Game extends AppCompatActivity
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        Object[] birbsAreNotObjects = (Object[]) getIntent().getExtras().getSerializable("birbPercents");
-        if (birbsAreNotObjects != null) {
-            for (int i = 0; i < birbsAreNotObjects.length; i++) {
-                initialBirbs[i] = (int[]) birbsAreNotObjects[i];
-            }
+        for (int i = 0; i < 10; i++) {
+            initialBirbs[i] = getIntent().getIntArrayExtra("birb" + i);
         }
         initialBirbsNames = getIntent().getStringArrayExtra("birbNames");
 
@@ -126,11 +127,12 @@ public class Game extends AppCompatActivity
         EnviormentDatabase.getDatabase(this);
 
         for (int i = 0; i < initialBirbs.length; i++) {
-            int dummyStr = (initialBirbs[i][0] * 65_536);
-            int dummySpd = (initialBirbs[i][1] * 65_536);
-            int dummyFth = (initialBirbs[i][2] * 65_536);
-            int dummyCol = (initialBirbs[i][3] * 32_767);
-            int dummySwm = (initialBirbs[i][4] * 65_536);
+            int dummyStr = (initialBirbs[i][0] * 65_536) / 100;
+            int dummySpd = (initialBirbs[i][1] * 65_536) / 100;
+            int dummyFth = (initialBirbs[i][2] * 65_536) / 100;
+            int dummyCol = (initialBirbs[i][3] * 32_767) / 100;
+            int dummySwm = (initialBirbs[i][4] * 65_536) / 100;
+            System.out.println(dummyStr + " " + dummySpd + " " + dummyFth + " " + dummyCol + " " + dummySwm);
 
             String dummyName = initialBirbsNames[i];
 
@@ -145,6 +147,43 @@ public class Game extends AppCompatActivity
             env = new Enviorment(initBirbs, getIntent().getIntExtra("env", -1));
             EnviormentDatabase.insert(env);
         }
+        switch (getIntent().getIntExtra("env", -1)){
+            case 1:
+                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_meadow));
+                break;
+            case 2:
+                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_desert));
+                break;
+            case 3:
+                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_snow));
+                break;
+            case 4:
+                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_island));
+                break;
+            default:
+                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_rip));
+                break;
+        }
+        birbImages = new int[]{
+                R.id.birb0,
+                R.id.birb1,
+                R.id.birb2,
+                R.id.birb3,
+                R.id.birb4,
+                R.id.birb5,
+                R.id.birb6,
+                R.id.birb7,
+                R.id.birb8,
+                R.id.birb9,
+                R.id.birb10,
+                R.id.birb11,
+                R.id.birb12,
+                R.id.birb13,
+        };
+        findViewById(R.id.birb10).setVisibility(View.INVISIBLE);
+        findViewById(R.id.birb11).setVisibility(View.INVISIBLE);
+        findViewById(R.id.birb12).setVisibility(View.INVISIBLE);
+        findViewById(R.id.birb13).setVisibility(View.INVISIBLE);
 
     }
 
@@ -202,13 +241,19 @@ public class Game extends AppCompatActivity
 
         switch (id) {
             case (R.id.view_logs):
-                // code to view logs
+                ArrayList<String> deaths = env.getLogs().getDeaths();
+                ArrayList<String> births = env.getLogs().getBirths();
+                // TODO: Here's 2 ArrayLists, they hold strings of logs
+                // TODO: Each Log Holds 1 line of "Birb X has died because of Y after Z generations"
+                // TODO: Make dialog box that pops up with single button to close
+                // TODO: Output logs in a scrolly way because there could be a lot of logs per generation
 
                 break;
             case (R.id.next_gen):
                 // code view go to next gen
                 // Todo things happen on environment
                 // Todo Show dialog based on random event
+                env.clearLogs();
                 env.birbsEat();
                 env.strongBirbsTakeFood();
                 env.birbsStarve();
@@ -236,6 +281,7 @@ public class Game extends AppCompatActivity
                     DialogFragment d = new DisplayEventDialog();
                     d.setArguments(args);
                     d.show(getSupportFragmentManager(), "eventDialog");
+                    env.setRandomEvent(randomEvent, (int) (Math.random() * 5) + 1);
                 }
 
                 BirbDatabase.nukeAll();
@@ -252,6 +298,15 @@ public class Game extends AppCompatActivity
                     Intent gameOver = new Intent(this, Game_over.class);
                     gameOver.putExtra("totalGens", env.getGenerationNum());
                     startActivity(gameOver);
+                }
+                env.outAllBirbs();
+                for (int i = 0; i < 14; i++) {
+                    if (i < tempBirbs.size() - 1) {
+                        findViewById(birbImages[i]).setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        findViewById(birbImages[i]).setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 break;

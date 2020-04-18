@@ -225,8 +225,8 @@ public class Enviorment {
                 birbs.get(fastestIndx).setHasPlantFood(true);
                 tempVegAmount--;
                 fastestSpeed = -1;
-                counter = 0;
             }
+            counter = 0;
         } while (!allEaten && tempVegAmount != 0);
 
         // Carniverous Birbs
@@ -247,7 +247,8 @@ public class Enviorment {
                 tempMeatAmount--;
                 fastestSpeed = -1;
             }
-        } while (!allEaten && tempVegAmount != 0);
+            counter = 0;
+        } while (!allEaten && tempMeatAmount != 0);
 
         // Cannibal Birbs
 
@@ -346,6 +347,9 @@ public class Enviorment {
             if (!birb.isHasMeatFood() && !birb.isHasPlantFood()) {
                 log.addDeath(birb.getName(), BirbLog.HUNGER_DEATH, birb.getGenerationsAlive());
                 birbIter.remove();
+            }
+            else {
+                birb.setHasMeatFood(false); birb.setHasPlantFood(false);
             }
         }
     }
@@ -450,29 +454,28 @@ public class Enviorment {
             succRange = (int) (Math.random() * 100);
             if (detected) {
                 if (succRange < 50) {
-                    if (!(predatorSpeed - 5000 < birb.getSpeedDecimal() &&
-                        birb.getSpeedDecimal() < predatorSpeed + 5000)) {
+                    if (!(predatorSpeed - 5000 < birb.getSpeedDecimal())){
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
                         birbIter.remove();
                     }
                 }
                 else if (succRange < 79) {
-                    if (!(predatorSpeed - 8000 < birb.getSpeedDecimal() &&
-                            birb.getSpeedDecimal() < predatorSpeed + 8000)) {
+                    if (!(predatorSpeed - 8000 < birb.getSpeedDecimal())) {
+                        System.err.println(birb.getSpeedDecimal());
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
                         birbIter.remove();
                     }
                 }
                 else if (succRange < 95) {
-                    if (!(predatorSpeed - 10000 < birb.getSpeedDecimal() &&
-                            birb.getSpeedDecimal() < predatorSpeed + 10000)) {
+                    if (!(predatorSpeed - 10000 < birb.getSpeedDecimal())) {
+                        System.err.println(birb.getSpeedDecimal());
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
                         birbIter.remove();
                     }
                 }
                 else {
-                    if (!(predatorSpeed - 15000 < birb.getSpeedDecimal() &&
-                            birb.getSpeedDecimal() < predatorSpeed + 15000)) {
+                    if (!(predatorSpeed - 15000 < birb.getSpeedDecimal())) {
+                        System.err.println(birb.getSpeedDecimal());
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
                         birbIter.remove();
                     }
@@ -483,7 +486,7 @@ public class Enviorment {
 
     public void birbsTemperature() {
         // target feathers number is 65536 - [temperature * 1,000]
-        int targetDecFeathers = 65_536 - temperature * 1000;
+        int targetDecFeathers = 65_536 - temperature * 1500;
 
         // apply event
         if (currentRandomEventType == INCREASED_TEMP_EVENT) {
@@ -655,10 +658,13 @@ public class Enviorment {
     }
 
     public int randomEvent() {
+        if (randomEventDurationLeft == 0) {
+            currentRandomEventType = NO_EVENT;
+        }
         if (currentRandomEventType == NO_EVENT) {
-            int newRandom = (int) (Math.random() * 4);
+            int newRandom = (int) (Math.random() * 10);
             if (newRandom == 0) {
-                newRandom = (int) (Math.random() * 11);
+                newRandom = (int) (Math.random() * 13);
                 return newRandom; // tell driver to set new random event handle ship event if == 10
             }
             else {
@@ -693,5 +699,14 @@ public class Enviorment {
 
     public void incrementGeneration() {
         this.generationNum++;
+    }
+
+    public void outAllBirbs() {
+        for (Birb birb : birbs) {
+            System.out.println(birb.getName() + ": " + " Str: " + birb.getStrengthDecimal() + " Spd: "
+                    + birb.getSpeedDecimal() + " Fther: " + birb.getFeathersDecimal()
+                    + " Col: " + birb.getColorDecimal() + " Swm: "
+                    + birb.getSwimmingDecimal());
+        }
     }
 }

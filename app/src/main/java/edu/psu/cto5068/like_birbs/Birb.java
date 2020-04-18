@@ -108,7 +108,7 @@ public class Birb {
                 this.strength[i] = 0;
             }
             else {
-                this.strength[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.strength[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -120,7 +120,7 @@ public class Birb {
                 this.speed[i] = 0;
             }
             else {
-                this.speed[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.speed[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -132,7 +132,7 @@ public class Birb {
                 this.feathers[i] = 0;
             }
             else {
-                this.feathers[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.feathers[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -144,7 +144,7 @@ public class Birb {
                 this.color[i] = 0;
             }
             else {
-                this.color[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.color[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -156,7 +156,7 @@ public class Birb {
                 this.swimming[i] = 0;
             }
             else {
-                this.swimming[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.swimming[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -170,6 +170,12 @@ public class Birb {
         this.color       = new int[15];
         this.swimming    = new int[16];
         this.id          = (int) (Math.random() * Integer.MAX_VALUE);
+
+        this.strengthDecimal      = 0;
+        this.speedDecimal         = 0;
+        this.feathersDecimal      = 0;
+        this.colorDecimal         = 0;
+        this.swimmingDecimal      = 0;
 
         int strengthSplit    = (int) (Math.random() * 16);
         int speedSplit       = (int) (Math.random() * 16);

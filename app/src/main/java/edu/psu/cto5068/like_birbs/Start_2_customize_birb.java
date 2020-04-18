@@ -184,9 +184,11 @@ public class Start_2_customize_birb extends AppCompatActivity {
 
                 if (birbsMade == 10) {
                     Intent startGame = new Intent(this, Game.class);
-                    Bundle birbBundle = new Bundle();
-                    birbBundle.putSerializable("birbPercents", initialBirbPercents);
-                    startGame.putExtra("birbBundle", birbBundle);
+
+
+                    for (int i = 0; i < 10; i++) {
+                        startGame.putExtra("birb" + i, initialBirbPercents[i]);
+                    }
                     startGame.putExtra("birbNames", birbNames);
                     startGame.putExtra("env", enviormentChoice);
                     startActivity(startGame);

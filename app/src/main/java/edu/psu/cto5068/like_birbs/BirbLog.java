@@ -61,6 +61,7 @@ public class BirbLog {
 
         logMessage = "Birb " + name + ", "  + deathMessage + "after " + aliveTime + " Generations.";
         deaths.add(logMessage);
+        System.err.println(logMessage);
     }
 
     public void addBirth(String parent1Name, String parent2Name, String newbornName) {

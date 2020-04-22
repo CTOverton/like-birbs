@@ -115,7 +115,7 @@ public class Game_over extends AppCompatActivity {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
         String username = sharedPreferences.getString("username", "");
-        Boolean upload_score = Boolean.parseBoolean(sharedPreferences.getString("upload_score", ""));
+        boolean upload_score = sharedPreferences.getBoolean("upload_score", true);
 
         if (upload_score) {
             Map<String, Object> dataToSave = new HashMap<String, Object>();

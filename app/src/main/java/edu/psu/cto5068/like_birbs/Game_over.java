@@ -115,24 +115,27 @@ public class Game_over extends AppCompatActivity {
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
         String username = sharedPreferences.getString("username", "");
+        Boolean upload_score = Boolean.parseBoolean(sharedPreferences.getString("upload_score", ""));
 
-        Map<String, Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(SCORE_KEY, score);
-        dataToSave.put(USER_KEY, username);
-        db.collection("highscores")
-                .add(dataToSave)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        if (upload_score) {
+            Map<String, Object> dataToSave = new HashMap<String, Object>();
+            dataToSave.put(SCORE_KEY, score);
+            dataToSave.put(USER_KEY, username);
+            db.collection("highscores")
+                    .add(dataToSave)
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error adding document", e);
+                        }
+                    });
+        }
 
         mVisible = true;
     }

@@ -6,8 +6,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -45,7 +47,6 @@ public class Leaderbirb extends AppCompatActivity {
     private static final String SCORE_KEY = "score";
     private static final String TAG = "Leaderbirb";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference mDocRef = db.collection("scores").document("test");
 
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -139,9 +140,13 @@ public class Leaderbirb extends AppCompatActivity {
                             return;
                         }
 
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(mContext /* Activity context */);
+                        int num_scores = Integer.parseInt(sharedPreferences.getString("num_scores", ""));
+
                         List<HighScore> highscores = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : value) {
-                            if (doc.get("username") != null) {
+                            if (doc.get("username") != null && highscores.size() < num_scores) {
                                 highscores.add(new HighScore(doc.getString("username"), doc.getLong("score").intValue()));
                             }
                         }
@@ -192,22 +197,5 @@ public class Leaderbirb extends AppCompatActivity {
      */
     private void delayedHide(int delayMillis) {
 
-    }
-
-    public void saveScore(View view) {
-        Map<String, Object> dataToSave = new HashMap<String, Object>();
-        dataToSave.put(SCORE_KEY, 400);
-        dataToSave.put(USER_KEY, "Christian");
-        mDocRef.set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("tag", "Document has been saved!");
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.w("tag", "Document was not saved!", e);
-            }
-        });
     }
 }

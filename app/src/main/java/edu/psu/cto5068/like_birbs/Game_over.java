@@ -2,20 +2,37 @@ package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
 public class Game_over extends AppCompatActivity {
+
+    private static final String USER_KEY = "username";
+    private static final String SCORE_KEY = "score";
+    private static final String TAG = "Game_over";
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -91,6 +108,31 @@ public class Game_over extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_game_over);
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        Integer score = extras.getInt("totalGens");
+
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
+        String username = sharedPreferences.getString("username", "");
+
+        Map<String, Object> dataToSave = new HashMap<String, Object>();
+        dataToSave.put(SCORE_KEY, score);
+        dataToSave.put(USER_KEY, username);
+        db.collection("highscores")
+                .add(dataToSave)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
 
         mVisible = true;
     }

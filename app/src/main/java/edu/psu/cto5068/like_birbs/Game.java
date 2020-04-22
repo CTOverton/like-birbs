@@ -296,7 +296,9 @@ public class Game extends AppCompatActivity
                 System.out.println(tempBirbs.size());
                 if (tempBirbs.size() == 0) {
                     Intent gameOver = new Intent(this, Game_over.class);
-                    gameOver.putExtra("totalGens", env.getGenerationNum());
+                    Bundle extras = new Bundle();
+                    extras.putInt("totalGens", env.getGenerationNum());
+                    gameOver.putExtras(extras);
                     startActivity(gameOver);
                 }
                 env.outAllBirbs();

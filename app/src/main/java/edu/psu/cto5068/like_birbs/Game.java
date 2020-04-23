@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -14,8 +15,11 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ListView;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.psu.cto5068.like_birbs.game.DisplayEventDialog;
 import edu.psu.cto5068.like_birbs.game.DisplayLogDialog;
@@ -29,6 +33,8 @@ public class Game extends AppCompatActivity
         DisplayLogDialog.LogDialogListener
 
 {
+
+    private String TAG = "Game";
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -241,13 +247,7 @@ public class Game extends AppCompatActivity
 
         switch (id) {
             case (R.id.view_logs):
-                ArrayList<String> deaths = env.getLogs().getDeaths();
-                ArrayList<String> births = env.getLogs().getBirths();
-                // TODO: Here's 2 ArrayLists, they hold strings of logs
-                // TODO: Each Log Holds 1 line of "Birb X has died because of Y after Z generations"
-                // TODO: Make dialog box that pops up with single button to close
-                // TODO: Output logs in a scrolly way because there could be a lot of logs per generation
-
+                popLogDialog(env.getLogs().getDeaths(), true);
                 break;
             case (R.id.next_gen):
                 // code view go to next gen
@@ -323,6 +323,16 @@ public class Game extends AppCompatActivity
         }
     }
 
+    public void popLogDialog(ArrayList<String> logs, Boolean isDeaths) {
+        Bundle arguments = new Bundle();
+        arguments.putBoolean("deathLogs", isDeaths);
+        arguments.putStringArrayList("logs", logs);
+
+        DialogFragment df = new DisplayLogDialog();
+        df.setArguments(arguments);
+        df.show(getSupportFragmentManager(), isDeaths ? "logDialogDeaths" : "logDialogBirths");
+    }
+
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
@@ -336,7 +346,14 @@ public class Game extends AppCompatActivity
 
     @Override
     public void onLogDialogPositiveClick(DialogFragment dialog) {
-        // Todo: Handle positive action
+        switch (dialog.getTag()) {
+            case "logDialogDeaths":
+                popLogDialog(env.getLogs().getBirths(), false);
+                break;
+            case "logDialogBirths":
+                popLogDialog(env.getLogs().getDeaths(), true);
+                break;
+        }
     }
 
     @Override

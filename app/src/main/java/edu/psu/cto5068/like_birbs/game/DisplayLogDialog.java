@@ -5,10 +5,19 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.psu.cto5068.like_birbs.LogListAdapter;
+import edu.psu.cto5068.like_birbs.LogMsg;
+import edu.psu.cto5068.like_birbs.R;
 
 public class DisplayLogDialog extends DialogFragment {
 
@@ -34,13 +43,23 @@ public class DisplayLogDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        // TODO: get log
-        String message = getArguments().getString("message");
+        boolean type = getArguments().getBoolean("deathLogs");
+        ArrayList logs = getArguments().getStringArrayList("logs");
+
+        List<LogMsg> logMsgs = new ArrayList<>();
+        for (int i = 0; i < logs.size(); i++) {
+            logMsgs.add(new LogMsg(logs.get(i).toString()));
+        }
+
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
+
+        LogListAdapter adapter = new LogListAdapter(getActivity(), R.layout.logs_adapter_view, logMsgs);
 
         builder
-                .setTitle("Birb Logs")
-//                .setView() // TODO: fill with log list
-                .setPositiveButton("View Death Logs", new DialogInterface.OnClickListener() {
+                .setTitle(type ? "Birb Death Logs" : "Birb Birth Logs")
+                .setView(inflater.inflate(R.layout.logs_view, null))
+                .setAdapter(adapter, null)
+                .setPositiveButton(type ? "View Births" : "View Deaths", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onLogDialogPositiveClick(DisplayLogDialog.this);
                     }

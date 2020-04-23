@@ -3,6 +3,7 @@ package edu.psu.cto5068.like_birbs;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.View;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -87,10 +89,16 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
 
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+    boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(playMusicPreference) {
+            startService(new Intent(FullscreenActivity.this, SoundService.class));
+        }
         setContentView(R.layout.activity_fullscreen);
 
         mVisible = true;

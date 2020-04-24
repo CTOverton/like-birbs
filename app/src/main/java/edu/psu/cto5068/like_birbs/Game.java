@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -244,15 +245,18 @@ public class Game extends AppCompatActivity
 
     public void gameClick(View view) {
         int id = view.getId();
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (id) {
             case (R.id.view_logs):
+                v.vibrate(100);
                 popLogDialog(env.getLogs().getDeaths(), true);
                 break;
             case (R.id.next_gen):
                 // code view go to next gen
                 // Todo things happen on environment
                 // Todo Show dialog based on random event
+                v.vibrate(100);
                 env.clearLogs();
                 env.birbsEat();
                 env.strongBirbsTakeFood();
@@ -314,6 +318,7 @@ public class Game extends AppCompatActivity
                 break;
             case (R.id.main_menu):
                 // launch dialog asking to save / no save and quit
+                v.vibrate(100);
                 Intent nextScreenIntent = new Intent(this, FullscreenActivity.class);
                 startActivity(nextScreenIntent);
                 break;

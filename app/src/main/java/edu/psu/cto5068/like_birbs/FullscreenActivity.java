@@ -2,10 +2,12 @@ package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -89,12 +91,11 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
 
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-    boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
 
         if(playMusicPreference) {
             startService(new Intent(FullscreenActivity.this, SoundService.class));
@@ -150,23 +151,28 @@ public class FullscreenActivity extends AppCompatActivity {
 
     public void gameClick(View view) {
         int id = view.getId();
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (id) {
             case (R.id.exitButton):
                 // code to exit game
+                v.vibrate(100);
                 System.exit(0);
                 break;
             case (R.id.goToScoresButton):
                 // code to see scores
+                v.vibrate(100);
                 Intent nextScreenIntent = new Intent(this, Leaderbirb.class);
                 startActivity(nextScreenIntent);
                 break;
             case (R.id.playButton):
                 // code to start game
+                v.vibrate(100);
                 Intent playScreenIntent = new Intent(this, Start_1_selection.class);
                 startActivity(playScreenIntent);
                 break;
             case (R.id.settingsButton):
+                v.vibrate(100);
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
             default:

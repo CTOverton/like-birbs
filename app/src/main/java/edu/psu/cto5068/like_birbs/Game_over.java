@@ -7,10 +7,12 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -191,15 +193,18 @@ public class Game_over extends AppCompatActivity {
 
     public void gameClick(View view) {
         int id = view.getId();
+        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (id) {
             case (R.id.goToScoresButton):
                 // code to view scores
+                v.vibrate(100);
                 Intent nextScreenIntent = new Intent(this, Leaderbirb.class);
                 startActivity(nextScreenIntent);
                 break;
             case (R.id.goToMenuButton):
                 // launch dialog asking to save / no save and quit
+                v.vibrate(100);
                 Intent menuIntent = new Intent(this, FullscreenActivity.class);
                 startActivity(menuIntent);
                 break;

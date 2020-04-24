@@ -338,20 +338,30 @@ public class Game extends AppCompatActivity
     public void animateBirbs(ImageView birb) {
         int whichAnimation;
         Random rand = new Random();
-        whichAnimation = rand.nextInt(3);
+        whichAnimation = rand.nextInt(5);
         switch (whichAnimation) {
             case 0:
                 // no animation, dont do anything
                 break;
             case 1:
-                // bounce animation
+                // jump animation
                 Animation birbbounce = AnimationUtils.loadAnimation(this, R.anim.birbbounce);
                 birb.startAnimation(birbbounce);
                 break;
             case 2:
-                // spin animation
+                // backflip animation
                 Animation birbspin = AnimationUtils.loadAnimation(this, R.anim.birbspin);
                 birb.startAnimation(birbspin);
+                break;
+            case 3:
+                // frontflip animation
+                Animation birbspin2 = AnimationUtils.loadAnimation(this, R.anim.birbspin2);
+                birb.startAnimation(birbspin2);
+                break;
+            case 4:
+                // bend knees animation
+                Animation birbbounce2 = AnimationUtils.loadAnimation(this, R.anim.birbbounce2);
+                birb.startAnimation(birbbounce2);
                 break;
         }
     }

@@ -16,11 +16,15 @@ import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import edu.psu.cto5068.like_birbs.game.DisplayEventDialog;
 import edu.psu.cto5068.like_birbs.game.DisplayLogDialog;
@@ -309,6 +313,8 @@ public class Game extends AppCompatActivity
                 for (int i = 0; i < 14; i++) {
                     if (i < tempBirbs.size() - 1) {
                         findViewById(birbImages[i]).setVisibility(View.VISIBLE);
+                        // call animateBirbs
+                        animateBirbs((ImageView)findViewById(birbImages[i]));
                     }
                     else {
                         findViewById(birbImages[i]).setVisibility(View.INVISIBLE);
@@ -327,6 +333,29 @@ public class Game extends AppCompatActivity
                 break;
         }
     }
+
+    // make birbs do animations
+    public void animateBirbs(ImageView birb) {
+        int whichAnimation;
+        Random rand = new Random();
+        whichAnimation = rand.nextInt(3);
+        switch (whichAnimation) {
+            case 0:
+                // no animation, dont do anything
+                break;
+            case 1:
+                // bounce animation
+                Animation birbbounce = AnimationUtils.loadAnimation(this, R.anim.birbbounce);
+                birb.startAnimation(birbbounce);
+                break;
+            case 2:
+                // spin animation
+                Animation birbspin = AnimationUtils.loadAnimation(this, R.anim.birbspin);
+                birb.startAnimation(birbspin);
+                break;
+        }
+    }
+
 
     public void popLogDialog(ArrayList<String> logs, Boolean isDeaths) {
         Bundle arguments = new Bundle();

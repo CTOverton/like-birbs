@@ -5,15 +5,22 @@ import android.annotation.SuppressLint;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.contentcapture.ContentCaptureCondition;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.devs.vectorchildfinder.VectorChildFinder;
+import com.devs.vectorchildfinder.VectorDrawableCompat;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -47,6 +54,8 @@ public class Start_2_customize_birb extends AppCompatActivity {
     private String[] birbNames = new String[10];
     private int birbsMade = 0;
     // End TODO
+
+    private SeekBar colorSeekBar;
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -105,9 +114,40 @@ public class Start_2_customize_birb extends AppCompatActivity {
 
         setContentView(R.layout.activity_start_2_customize_birb);
 
+        final Context mContext = this;
+
         mVisible = true;
         names = new BirbNameGenerator();
         enviormentChoice = getIntent().getIntExtra("env", 0);
+
+        colorSeekBar = findViewById(R.id.seekBar_body_color);
+        colorSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                float[] hsv = new float[3];
+                hsv[0] = progress;
+                hsv[1] = 0.5f;
+                hsv[2] = 0.75f;
+
+                int outputColor = Color.HSVToColor(hsv);
+
+                ImageView img = findViewById(R.id.imageView_birb);
+                VectorChildFinder vector = new VectorChildFinder(mContext, R.drawable.birb_the_perfect_birb, img);
+
+                VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
+                path1.setFillColor(outputColor);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @Override

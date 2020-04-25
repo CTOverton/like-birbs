@@ -129,7 +129,8 @@
                         android:id="@+id/seekBar_body_color"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_weight="1"
+                        android:max="360"/>
                 </LinearLayout>
 
                 <LinearLayout

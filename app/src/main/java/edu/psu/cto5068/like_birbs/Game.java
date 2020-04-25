@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -20,6 +21,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.devs.vectorchildfinder.VectorChildFinder;
+import com.devs.vectorchildfinder.VectorDrawableCompat;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -128,6 +132,23 @@ public class Game extends AppCompatActivity
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
+        birbImages = new int[]{
+                R.id.birb0,
+                R.id.birb1,
+                R.id.birb2,
+                R.id.birb3,
+                R.id.birb4,
+                R.id.birb5,
+                R.id.birb6,
+                R.id.birb7,
+                R.id.birb8,
+                R.id.birb9,
+                R.id.birb10,
+                R.id.birb11,
+                R.id.birb12,
+                R.id.birb13,
+        };
+
         for (int i = 0; i < 10; i++) {
             initialBirbs[i] = getIntent().getIntArrayExtra("birb" + i);
         }
@@ -146,6 +167,19 @@ public class Game extends AppCompatActivity
             System.out.println(dummyStr + " " + dummySpd + " " + dummyFth + " " + dummyCol + " " + dummySwm);
 
             String dummyName = initialBirbsNames[i];
+
+            float[] hsv = new float[3];
+            hsv[0] = initialBirbs[i][3];
+            hsv[1] = 0.5f;
+            hsv[2] = 0.75f;
+
+            int outputColor = Color.HSVToColor(hsv);
+            ImageView img = findViewById(birbImages[i]);
+            VectorChildFinder vector = new VectorChildFinder(this, R.drawable.birb_the_perfect_birb, img);
+
+            VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
+            path1.setFillColor(outputColor);
+
 
             // there HAS to be a better way to do this
             int dummyId = (int) (Math.random() * Integer.MAX_VALUE);
@@ -175,27 +209,11 @@ public class Game extends AppCompatActivity
                 (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_rip));
                 break;
         }
-        birbImages = new int[]{
-                R.id.birb0,
-                R.id.birb1,
-                R.id.birb2,
-                R.id.birb3,
-                R.id.birb4,
-                R.id.birb5,
-                R.id.birb6,
-                R.id.birb7,
-                R.id.birb8,
-                R.id.birb9,
-                R.id.birb10,
-                R.id.birb11,
-                R.id.birb12,
-                R.id.birb13,
-        };
+
         findViewById(R.id.birb10).setVisibility(View.INVISIBLE);
         findViewById(R.id.birb11).setVisibility(View.INVISIBLE);
         findViewById(R.id.birb12).setVisibility(View.INVISIBLE);
         findViewById(R.id.birb13).setVisibility(View.INVISIBLE);
-
     }
 
     @Override

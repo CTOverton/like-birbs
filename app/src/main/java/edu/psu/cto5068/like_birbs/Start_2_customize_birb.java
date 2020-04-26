@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -87,6 +89,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
         }
     };
     private boolean mVisible;
+    private boolean keepMusicGoing = false;
     private final Runnable mHideRunnable = new Runnable() {
         @Override
         public void run() {
@@ -207,9 +210,10 @@ public class Start_2_customize_birb extends AppCompatActivity {
                 ((TextView) findViewById(R.id.textView_birbname)).setText(names.getRandomName());
                 break;
             case(R.id.exit_button):
-                Intent back = new Intent(this, Start_1_selection.class);
+                Intent back = new Intent(this, FullscreenActivity.class);
+                keepMusicGoing = true;
                 startActivity(back);
-                break;
+                return;
             case(R.id.done_button):
                 initialBirbPercents[birbsMade][0] = ((SeekBar) findViewById(R.id.seekBar_strength)).getProgress();
                 initialBirbPercents[birbsMade][1] = ((SeekBar) findViewById(R.id.seekBar_speed)).getProgress();
@@ -224,8 +228,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
 
                 if (birbsMade == 10) {
                     Intent startGame = new Intent(this, Game.class);
-
-
+                    keepMusicGoing = true;
                     for (int i = 0; i < 10; i++) {
                         startGame.putExtra("birb" + i, initialBirbPercents[i]);
                     }
@@ -250,6 +253,24 @@ public class Start_2_customize_birb extends AppCompatActivity {
             default:
                 break;
 
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        keepMusicGoing = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
+        if(playMusicPreference) {
+            startService(new Intent(Start_2_customize_birb.this, SoundService.class));
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!keepMusicGoing) {
+            stopService(new Intent(Start_2_customize_birb.this, SoundService.class));
         }
     }
 }

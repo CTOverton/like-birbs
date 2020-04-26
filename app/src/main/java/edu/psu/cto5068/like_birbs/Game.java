@@ -6,9 +6,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
+import androidx.preference.PreferenceManager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -69,6 +71,7 @@ public class Game extends AppCompatActivity
     private String[] initialBirbsNames;
     private Enviorment env;
     private int[] birbImages;
+    private boolean keepMusicGoing = false;
     //
 
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -324,8 +327,10 @@ public class Game extends AppCompatActivity
                     Intent gameOver = new Intent(this, Game_over.class);
                     Bundle extras = new Bundle();
                     extras.putInt("totalGens", env.getGenerationNum());
+                    keepMusicGoing = true;
                     gameOver.putExtras(extras);
                     startActivity(gameOver);
+                    return;
                 }
                 env.outAllBirbs();
                 for (int i = 0; i < 14; i++) {
@@ -421,5 +426,23 @@ public class Game extends AppCompatActivity
     @Override
     public void onLogDialogNegativeClick(DialogFragment dialog) {
         // Todo: Handle negative action
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        keepMusicGoing = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
+        if(playMusicPreference) {
+            startService(new Intent(Game.this, SoundService.class));
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!keepMusicGoing) {
+            stopService(new Intent(Game.this, SoundService.class));
+        }
     }
 }

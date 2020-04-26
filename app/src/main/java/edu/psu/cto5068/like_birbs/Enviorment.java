@@ -169,6 +169,7 @@ public class Enviorment {
                 hasWater         = false;
                 temperature      = 5;
                 generationNum    = 0;
+                break;
             case (4):
                 predatorTypes    = 3;
                 landType         = 4;
@@ -177,6 +178,7 @@ public class Enviorment {
                 hasWater         = true;
                 temperature      = 25;
                 generationNum    = 0;
+                break;
 
         }
         currentRandomEventType = NO_EVENT;

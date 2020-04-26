@@ -13,8 +13,34 @@ public class SoundService extends Service {
     }
 
     public void onCreate() {
-        player = MediaPlayer.create(this, R.raw.furelise);
-        player.setLooping(true);
+        int randomSong = (int) (Math.random() * 3);
+        switch(randomSong) {
+            case 0:
+                player = MediaPlayer.create(this, R.raw.serenity);
+                break;
+            case 1:
+                player = MediaPlayer.create(this, R.raw.home);
+                break;
+            case 2:
+                player = MediaPlayer.create(this, R.raw.freshair);
+        }
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                int randomSong = (int) (Math.random() * 3);
+                switch(randomSong) {
+                    case 0:
+                        player = MediaPlayer.create(SoundService.this, R.raw.serenity);
+                        break;
+                    case 1:
+                        player = MediaPlayer.create(SoundService.this, R.raw.home);
+                        break;
+                    case 2:
+                        player = MediaPlayer.create(SoundService.this, R.raw.freshair);
+                }
+            player.start();
+            }
+        });
     }
 
     @Override
@@ -23,6 +49,7 @@ public class SoundService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
+    @Override
     public void onDestroy() {
         player.stop();
         player.release();

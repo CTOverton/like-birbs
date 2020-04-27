@@ -2,6 +2,7 @@ package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
@@ -110,6 +111,27 @@ public class Start_2_customize_birb extends AppCompatActivity {
             return false;
         }
     };
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("env", enviormentChoice);
+        outState.putInt("birbsMade", birbsMade);
+        outState.putStringArray("birbnames", birbNames);
+        for (int i = 0; i < birbsMade; i++) {
+            outState.putIntArray("birb" + i, initialBirbPercents[i]);
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle inState) {
+        super.onRestoreInstanceState(inState);
+        birbsMade = inState.getInt("env");
+        enviormentChoice = inState.getInt("birbsMade");
+        birbNames = inState.getStringArray("birbnames");
+        for (int i = 0; i < birbsMade; i++) {
+            initialBirbPercents[i] = inState.getIntArray("birb" + i);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,6 +235,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
                 Intent back = new Intent(this, FullscreenActivity.class);
                 keepMusicGoing = true;
                 startActivity(back);
+                finish();
                 return;
             case(R.id.done_button):
                 initialBirbPercents[birbsMade][0] = ((SeekBar) findViewById(R.id.seekBar_strength)).getProgress();
@@ -234,6 +257,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
                     }
                     startGame.putExtra("birbNames", birbNames);
                     startGame.putExtra("env", enviormentChoice);
+                    startGame.putExtra("newgame", true);
                     startActivity(startGame);
 
                     for (int i = 0; i < 10; i++) {
@@ -245,6 +269,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
                     }
                     BirbDatabase.getDatabase(this);
                     BirbDatabase.nukeAll();
+                    finish();
                 }
                 else {
                     ((TextView) findViewById(R.id.textView_birbnum)).setText((birbsMade + 1) + "/10");

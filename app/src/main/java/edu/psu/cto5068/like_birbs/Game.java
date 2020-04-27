@@ -2,6 +2,7 @@ package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -68,6 +69,7 @@ public class Game extends AppCompatActivity
 
     // Jacob's Stuff
     private int[][] initialBirbs = new int[10][6];
+    private ArrayList<Birb> temp;
     private String[] initialBirbsNames;
     private Enviorment env;
     private int[] birbImages;
@@ -124,93 +126,121 @@ public class Game extends AppCompatActivity
             return false;
         }
     };
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("newGame", false);
+    }
 
+    @Override
+    public void onRestoreInstanceState(@NonNull Bundle inState) {
+        super.onRestoreInstanceState(inState);
+        if (!inState.getBoolean("newGame", true)) {
+            BirbDatabase.getDatabase(this);
+            BirbDatabase.getAllBirbs(new BirbDatabase.AllBirbsListener() {
+                @Override
+                public void onBirbsReturn(List<Birb> birbs) {
+                    temp = new ArrayList<>(birbs);
+                }
+            });
+            EnviormentDatabase.getDatabase(this);
+            EnviormentDatabase.getMostRecent(new EnviormentDatabase.EnviormentListener() {
+                @Override
+                public void onEnviormentReturn(Enviorment myEnv) {
+                    env = myEnv;
+                    env.setBirbs(temp);
+                }
+            });
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.wtf("Help", "OnCreate Called");
         setContentView(R.layout.activity_game);
 
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-        birbImages = new int[]{
-                R.id.birb0,
-                R.id.birb1,
-                R.id.birb2,
-                R.id.birb3,
-                R.id.birb4,
-                R.id.birb5,
-                R.id.birb6,
-                R.id.birb7,
-                R.id.birb8,
-                R.id.birb9,
-                R.id.birb10,
-                R.id.birb11,
-                R.id.birb12,
-                R.id.birb13,
-        };
+        if (savedInstanceState == null) {
+            birbImages = new int[]{
+                    R.id.birb0,
+                    R.id.birb1,
+                    R.id.birb2,
+                    R.id.birb3,
+                    R.id.birb4,
+                    R.id.birb5,
+                    R.id.birb6,
+                    R.id.birb7,
+                    R.id.birb8,
+                    R.id.birb9,
+                    R.id.birb10,
+                    R.id.birb11,
+                    R.id.birb12,
+                    R.id.birb13,
+            };
 
-        for (int i = 0; i < 10; i++) {
-            initialBirbs[i] = getIntent().getIntArrayExtra("birb" + i);
-        }
-        initialBirbsNames = getIntent().getStringArrayExtra("birbNames");
+            for (int i = 0; i < 10; i++) {
+                initialBirbs[i] = getIntent().getIntArrayExtra("birb" + i);
+            }
+            initialBirbsNames = getIntent().getStringArrayExtra("birbNames");
 
-        ArrayList<Birb> initBirbs = new ArrayList<>();
-        BirbDatabase.getDatabase(this);
-        EnviormentDatabase.getDatabase(this);
+            ArrayList<Birb> initBirbs = new ArrayList<>();
+            BirbDatabase.getDatabase(this);
+            EnviormentDatabase.getDatabase(this);
 
-        for (int i = 0; i < initialBirbs.length; i++) {
-            int dummyStr = (initialBirbs[i][0] * 65_536) / 100;
-            int dummySpd = (initialBirbs[i][1] * 65_536) / 100;
-            int dummyFth = (initialBirbs[i][2] * 65_536) / 100;
-            int dummyCol = (initialBirbs[i][3] * 32_767) / 100;
-            int dummySwm = (initialBirbs[i][4] * 65_536) / 100;
-            System.out.println(dummyStr + " " + dummySpd + " " + dummyFth + " " + dummyCol + " " + dummySwm);
+            for (int i = 0; i < initialBirbs.length; i++) {
+                int dummyStr = (initialBirbs[i][0] * 65_536) / 100;
+                int dummySpd = (initialBirbs[i][1] * 65_536) / 100;
+                int dummyFth = (initialBirbs[i][2] * 65_536) / 100;
+                int dummyCol = (initialBirbs[i][3] * 32_767) / 100;
+                int dummySwm = (initialBirbs[i][4] * 65_536) / 100;
+                System.out.println(dummyStr + " " + dummySpd + " " + dummyFth + " " + dummyCol + " " + dummySwm);
 
-            String dummyName = initialBirbsNames[i];
+                String dummyName = initialBirbsNames[i];
 
-            float[] hsv = new float[3];
-            hsv[0] = initialBirbs[i][3];
-            hsv[1] = 0.5f;
-            hsv[2] = 0.75f;
+                float[] hsv = new float[3];
+                hsv[0] = initialBirbs[i][3];
+                hsv[1] = 0.5f;
+                hsv[2] = 0.75f;
 
-            int outputColor = Color.HSVToColor(hsv);
-            ImageView img = findViewById(birbImages[i]);
-            VectorChildFinder vector = new VectorChildFinder(this, R.drawable.birb_the_perfect_birb, img);
+                int outputColor = Color.HSVToColor(hsv);
+                ImageView img = findViewById(birbImages[i]);
+                VectorChildFinder vector = new VectorChildFinder(this, R.drawable.birb_the_perfect_birb, img);
 
-            VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
-            path1.setFillColor(outputColor);
+                VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
+                path1.setFillColor(outputColor);
 
 
-            // there HAS to be a better way to do this
-            int dummyId = (int) (Math.random() * Integer.MAX_VALUE);
+                // there HAS to be a better way to do this
+                int dummyId = (int) (Math.random() * Integer.MAX_VALUE);
 
-            initBirbs.add(new Birb(dummyId, dummyStr, dummySpd, dummyFth, dummyCol, dummySwm, new boolean[]{false, false}, dummyName));
-            System.out.println(i);
-            BirbDatabase.insert(initBirbs.get(i));
-        }
-        if (getIntent().getIntExtra("env", -1) != -1) {
-            env = new Enviorment(initBirbs, getIntent().getIntExtra("env", -1));
-            EnviormentDatabase.insert(env);
-        }
-        switch (getIntent().getIntExtra("env", -1)){
-            case 1:
-                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_meadow));
-                break;
-            case 2:
-                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_desert));
-                break;
-            case 3:
-                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_snow));
-                break;
-            case 4:
-                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_island));
-                break;
-            default:
-                (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_rip));
-                break;
+                initBirbs.add(new Birb(dummyId, dummyStr, dummySpd, dummyFth, dummyCol, dummySwm, new boolean[]{false, false}, dummyName));
+                System.out.println(i);
+                BirbDatabase.insert(initBirbs.get(i));
+            }
+            if (getIntent().getIntExtra("env", -1) != -1) {
+                env = new Enviorment(initBirbs, getIntent().getIntExtra("env", -1));
+                EnviormentDatabase.insert(env);
+            }
+            switch (getIntent().getIntExtra("env", -1)) {
+                case 1:
+                    (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_meadow));
+                    break;
+                case 2:
+                    (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_desert));
+                    break;
+                case 3:
+                    (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_snow));
+                    break;
+                case 4:
+                    (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_island));
+                    break;
+                default:
+                    (findViewById(R.id.bg)).setBackground(ContextCompat.getDrawable(this, R.drawable.bg_rip));
+                    break;
+            }
         }
 
         findViewById(R.id.birb10).setVisibility(View.INVISIBLE);
@@ -330,6 +360,7 @@ public class Game extends AppCompatActivity
                     keepMusicGoing = true;
                     gameOver.putExtras(extras);
                     startActivity(gameOver);
+                    finish();
                     return;
                 }
                 env.outAllBirbs();
@@ -348,8 +379,14 @@ public class Game extends AppCompatActivity
             case (R.id.main_menu):
                 // launch dialog asking to save / no save and quit
                 v.vibrate(100);
-                Intent nextScreenIntent = new Intent(this, FullscreenActivity.class);
+                Intent nextScreenIntent = new Intent(this, Game_over.class);
+                Bundle extras = new Bundle();
+                extras.putInt("totalGens", env.getGenerationNum());
+                nextScreenIntent.putExtras(extras);
                 startActivity(nextScreenIntent);
+                nextScreenIntent.putExtras(extras);
+                keepMusicGoing = true;
+                finish();
                 break;
             default:
                 // error

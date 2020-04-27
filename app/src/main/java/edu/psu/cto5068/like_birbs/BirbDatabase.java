@@ -10,12 +10,19 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Database(entities = {Birb.class}, version = 1, exportSchema = false)
 @TypeConverters({Converter.class})
 public abstract class BirbDatabase extends RoomDatabase {
     public interface BirbListener {
         void onBirbReturn(Birb birb);
         void onBirbDeath(Birb ripBirb, int deathID);
+    }
+
+    public interface AllBirbsListener {
+        void onBirbsReturn(List<Birb> birbs);
     }
     public abstract BirbDAO birbDAO();
     private static BirbDatabase INSTANCE;
@@ -95,6 +102,19 @@ public abstract class BirbDatabase extends RoomDatabase {
             protected Void doInBackground(Void... voids) {
                 INSTANCE.birbDAO().nukeAll();
                 return null;
+            }
+        }.execute();
+    }
+
+    public static void getAllBirbs(final AllBirbsListener listener) {
+        new AsyncTask<Void, Void, List<Birb>>() {
+            @Override
+            protected List<Birb> doInBackground(Void... voids) {
+                return INSTANCE.birbDAO().getAllBirbs();
+            }
+            @Override
+            protected void onPostExecute(List<Birb> birbs) {
+                listener.onBirbsReturn(birbs);
             }
         }.execute();
     }

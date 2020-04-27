@@ -208,6 +208,7 @@ public class Game_over extends AppCompatActivity {
                 // launch dialog asking to save / no save and quit
                 v.vibrate(100);
                 Intent menuIntent = new Intent(this, FullscreenActivity.class);
+                menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 keepMusicGoing = true;
                 startActivity(menuIntent);
                 break;

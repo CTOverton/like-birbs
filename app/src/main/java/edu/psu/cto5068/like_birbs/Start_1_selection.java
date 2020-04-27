@@ -174,8 +174,7 @@ public class Start_1_selection extends AppCompatActivity {
         Intent nextScreenIntent = new Intent(this, Start_2_customize_birb.class);
         nextScreenIntent.putExtra("env", envSelection);
         startActivity(nextScreenIntent);
-        return;
-
+        finish();
     }
 
     @Override

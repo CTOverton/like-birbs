@@ -699,6 +699,8 @@ public class Enviorment {
         return this.birbs;
     }
 
+    public void setBirbs(ArrayList<Birb> birbs) {this.birbs = new ArrayList<>(birbs);}
+
     public void incrementGeneration() {
         this.generationNum++;
     }

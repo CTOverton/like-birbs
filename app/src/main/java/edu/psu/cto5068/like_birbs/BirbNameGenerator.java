@@ -57,7 +57,7 @@ public class BirbNameGenerator {
         "Lambo","Mukuro","Chrome","Xanxus","Superbi","Lussuria","Leviathan","Belphegor","Fran","Yuni","Byakuran","Daemon","Alaude","Knuckle","G.","Ugetsu","Lampo",
         "Ieyasu","Timoteo","Luce","Colonello","Skull","Viper","Lal","Fong","Verde","Iemitsu","Basil","Shoichi","Tetsuya","Cozart","Enma","Haru","Hana","Nana","Bianchi",
         "Shamal","I-Pin","Dino","Futa","Sepira","Freya","Hayate","Mirage","Mikumo","Kaname","Makina","Reina","Arad","Messer","Keith","Theo","Kassim","Alto","Ranka",
-        "Sheryl"};
+        "Sheryl","Ailwin, Patriarch of Fire"};
     }
 
     public String getRandomName() {

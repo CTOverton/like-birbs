@@ -9,20 +9,38 @@
     tools:context=".Game" >
 
     <Button
-        android:id="@+id/view_logs"
-        android:layout_width="184dp"
+        android:id="@+id/view_birth_logs"
+        android:layout_width="124dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/round_button"
         android:backgroundTint="@color/design_default_color_primary"
         android:backgroundTintMode="add"
         android:fontFamily="@font/roboto_mono_medium"
-        android:text="@string/view_logs"
-        android:textColor="#FFFFFF"
         android:onClick="gameClick"
+        android:text="@string/view_birth_logs"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/next_gen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/next_gen" />
+        app:layout_constraintTop_toTopOf="@+id/next_gen"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/view_death_logs"
+        android:layout_width="124dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTintMode="add"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:onClick="gameClick"
+        android:text="@string/view_death_logs"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/next_gen"
+        app:layout_constraintStart_toEndOf="@id/view_birth_logs"
+        app:layout_constraintTop_toTopOf="@+id/next_gen"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/next_gen"
@@ -40,12 +58,12 @@
 
         app:layout_constraintEnd_toStartOf="@+id/main_menu"
         app:layout_constraintHorizontal_bias="0.325"
-        app:layout_constraintStart_toEndOf="@+id/view_logs"
+        app:layout_constraintStart_toEndOf="@+id/view_death_logs"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/main_menu"
-        android:layout_width="184dp"
+        android:layout_width="124dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/round_button"

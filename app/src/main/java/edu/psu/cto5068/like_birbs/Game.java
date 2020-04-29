@@ -270,7 +270,11 @@ public class Game extends AppCompatActivity
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (id) {
-            case (R.id.view_logs):
+            case (R.id.view_birth_logs):
+                v.vibrate(100);
+                popLogDialog(env.getLogs().getBirths(), false);
+                break;
+            case (R.id.view_death_logs):
                 v.vibrate(100);
                 popLogDialog(env.getLogs().getDeaths(), true);
                 break;
@@ -331,6 +335,20 @@ public class Game extends AppCompatActivity
                 for (int i = 0; i < 14; i++) {
                     if (i < tempBirbs.size() - 1) {
                         findViewById(birbImages[i]).setVisibility(View.VISIBLE);
+
+                        float[] hsv = new float[3];
+                        hsv[0] = (float) ((tempBirbs.get(i).getColorDecimal() * 1.0) / 32767) * 360;
+                        hsv[1] = 0.5f;
+                        hsv[2] = 0.75f;
+
+                        int outputColor = Color.HSVToColor(hsv);
+
+                        ImageView img = findViewById(birbImages[i]);
+                        VectorChildFinder vector = new VectorChildFinder(this, R.drawable.birb_the_perfect_birb, img);
+
+                        VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
+                        path1.setFillColor(outputColor);
+
                         // call animateBirbs
                         animateBirbs((ImageView)findViewById(birbImages[i]));
                     }

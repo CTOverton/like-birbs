@@ -41,4 +41,6 @@
     <string name="customize_lbl_strength_num">0%</string>
     <string name="customize_lbl_birbname">Gerold</string>
     <string name="customize_lbl_birbnum">1/10</string>
+    <string name="view_death_logs">View Deaths</string>
+    <string name="view_birth_logs">View Births</string>
 </resources>

@@ -58,8 +58,8 @@ public class DisplayLogDialog extends DialogFragment {
         builder
                 .setTitle(type ? "Birb Death Logs" : "Birb Birth Logs")
                 .setView(inflater.inflate(R.layout.logs_view, null))
-                .setAdapter(adapter, null)
-                .setPositiveButton(type ? "View Births" : "View Deaths", new DialogInterface.OnClickListener() {
+                .setAdapter(adapter, null);
+/*                .setPositiveButton(type ? "View Births" : "View Deaths", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onLogDialogPositiveClick(DisplayLogDialog.this);
                     }
@@ -68,7 +68,7 @@ public class DisplayLogDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         listener.onLogDialogNegativeClick(DisplayLogDialog.this);
                     }
-                });
+                });*/
         return builder.create();
     }
 }

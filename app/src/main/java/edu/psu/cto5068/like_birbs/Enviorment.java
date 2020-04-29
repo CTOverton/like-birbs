@@ -602,13 +602,23 @@ public class Enviorment {
     }
 
     public void birbsReproduce() {
+        String mommy = "";
+        String daddy = "";
+        Birb temp = null;
+
         int initBirbSize = birbs.size();
         for (int i = 0; i < initBirbSize - 1; i++) {
-            birbs.add(new Birb(birbs.get(i), birbs.get(i+1), this.currentRandomEventType == RADIOACTIVE_FALLOUT_EVENT));
+            mommy = birbs.get(i).getName();
+            daddy = birbs.get(i+1).getName();
+            temp = new Birb(birbs.get(i), birbs.get(i+1), this.currentRandomEventType == RADIOACTIVE_FALLOUT_EVENT);
+
+            log.addBirth(mommy, daddy, temp.getName());
+            birbs.add(temp);
         }
         if (this.currentRandomEventType == RADIOACTIVE_FALLOUT_EVENT) {
             this.randomEventDurationLeft--;
         }
+
     }
 
     public boolean allDead() {

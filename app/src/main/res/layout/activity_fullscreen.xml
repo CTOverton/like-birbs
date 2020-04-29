@@ -126,5 +126,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/birb_the_perfect_birb" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="426dp"
+        android:layout_height="118dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="52dp"
+        android:text="Like Birbs"
+        android:textSize="84sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

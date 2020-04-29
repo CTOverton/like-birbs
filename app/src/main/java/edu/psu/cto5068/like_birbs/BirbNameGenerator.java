@@ -47,7 +47,17 @@ public class BirbNameGenerator {
                                 "Patricia",
                                 "Robert",
                                 "James",
-                                "Donna"};
+                                "Donna",
+                                "Gerold",
+                                "Edward",
+                                "Alphonse",
+                                "Roy",
+        "Lucy","Antonio","Ezra","Alois","Sasha","Louise","Sebastian","Ciel","Maria","Wendy","Giotto","Gilbert","Gray","Mavis","Makarov","Mirajane","Winry",
+        "Beatrice","Frau","Rosette","Oz","Elliot","Glen","Oscar","Rufus","Grell","Tsuna","Takeshi","Hayato","Reborn","Kyoya","Ryohei","Kyoko","Minfilia",
+        "Lambo","Mukuro","Chrome","Xanxus","Superbi","Lussuria","Leviathan","Belphegor","Fran","Yuni","Byakuran","Daemon","Alaude","Knuckle","G.","Ugetsu","Lampo",
+        "Ieyasu","Timoteo","Luce","Colonello","Skull","Viper","Lal","Fong","Verde","Iemitsu","Basil","Shoichi","Tetsuya","Cozart","Enma","Haru","Hana","Nana","Bianchi",
+        "Shamal","I-Pin","Dino","Futa","Sepira","Freya","Hayate","Mirage","Mikumo","Kaname","Makina","Reina","Arad","Messer","Keith","Theo","Kassim","Alto","Ranka",
+        "Sheryl","Ailwin, Patriarch of Fire"};
     }
 
     public String getRandomName() {

@@ -54,6 +54,7 @@ public class Game_over extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private boolean keepMusicGoing = false;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
         @Override
@@ -200,17 +201,38 @@ public class Game_over extends AppCompatActivity {
                 // code to view scores
                 v.vibrate(100);
                 Intent nextScreenIntent = new Intent(this, Leaderbirb.class);
+                keepMusicGoing = true;
                 startActivity(nextScreenIntent);
                 break;
             case (R.id.goToMenuButton):
                 // launch dialog asking to save / no save and quit
                 v.vibrate(100);
                 Intent menuIntent = new Intent(this, FullscreenActivity.class);
+                menuIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                keepMusicGoing = true;
                 startActivity(menuIntent);
                 break;
             default:
                 // error
                 break;
+        }
+    }
+
+    public void onResume() {
+        super.onResume();
+        keepMusicGoing = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
+        if(playMusicPreference) {
+            startService(new Intent(Game_over.this, SoundService.class));
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!keepMusicGoing) {
+            stopService(new Intent(Game_over.this, SoundService.class));
         }
     }
 }

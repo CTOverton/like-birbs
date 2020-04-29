@@ -4,8 +4,10 @@ import android.annotation.SuppressLint;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MotionEvent;
@@ -53,6 +55,7 @@ public class Start_1_selection extends AppCompatActivity {
         }
     };
     private View mControlsView;
+    private boolean keepMusicGoing;
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -167,9 +170,29 @@ public class Start_1_selection extends AppCompatActivity {
                 break;
         }
 
+        keepMusicGoing = true;
         Intent nextScreenIntent = new Intent(this, Start_2_customize_birb.class);
         nextScreenIntent.putExtra("env", envSelection);
         startActivity(nextScreenIntent);
+        finish();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        keepMusicGoing = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
+        if(playMusicPreference) {
+            startService(new Intent(Start_1_selection.this, SoundService.class));
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!keepMusicGoing) {
+            stopService(new Intent(Start_1_selection.this, SoundService.class));
+        }
     }
 }

@@ -58,6 +58,8 @@ public class FullscreenActivity extends AppCompatActivity {
         }
     };
     private View mControlsView;
+    private boolean keepMusicGoing = false;
+
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
         public void run() {
@@ -162,22 +164,43 @@ public class FullscreenActivity extends AppCompatActivity {
             case (R.id.goToScoresButton):
                 // code to see scores
                 v.vibrate(100);
+                keepMusicGoing = true;
                 Intent nextScreenIntent = new Intent(this, Leaderbirb.class);
                 startActivity(nextScreenIntent);
                 break;
             case (R.id.playButton):
                 // code to start game
                 v.vibrate(100);
+                keepMusicGoing = true;
                 Intent playScreenIntent = new Intent(this, Start_1_selection.class);
                 startActivity(playScreenIntent);
                 break;
             case (R.id.settingsButton):
                 v.vibrate(100);
+                keepMusicGoing = true;
                 Intent settingsIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingsIntent);
             default:
                 // error
                 break;
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        keepMusicGoing = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
+        if(playMusicPreference) {
+            startService(new Intent(FullscreenActivity.this, SoundService.class));
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!keepMusicGoing) {
+            stopService(new Intent(FullscreenActivity.this, SoundService.class));
         }
     }
 }

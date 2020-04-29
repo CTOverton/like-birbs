@@ -5,16 +5,21 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
+
+import com.devs.vectorchildfinder.VectorChildFinder;
+import com.devs.vectorchildfinder.VectorDrawableCompat;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -194,6 +199,29 @@ public class FullscreenActivity extends AppCompatActivity {
 
         if(playMusicPreference) {
             startService(new Intent(FullscreenActivity.this, SoundService.class));
+        }
+
+        int[] birbImages = new int[] {
+                R.id.imageView,
+                R.id.imageView2,
+                R.id.imageView3,
+                R.id.imageView4,
+                R.id.imageView5,
+        };
+
+        for (int i = 0; i < birbImages.length; i++) {
+            float[] hsv = new float[3];
+            hsv[0] = (float) (Math.random() * 360) + 1;
+            hsv[1] = 0.5f;
+            hsv[2] = 0.75f;
+
+            int outputColor = Color.HSVToColor(hsv);
+
+            ImageView img = findViewById(birbImages[i]);
+            VectorChildFinder vector = new VectorChildFinder(this, R.drawable.birb_the_perfect_birb, img);
+
+            VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
+            path1.setFillColor(outputColor);
         }
     }
     @Override

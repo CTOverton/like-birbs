@@ -139,26 +139,6 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/textView_secondary_color"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/customize_lbl_secondary_color" />
-
-                    <SeekBar
-                        android:id="@+id/seekBar_secondary_color"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
-
                     <Button
                         android:id="@+id/exit_button"
                         android:layout_width="match_parent"

@@ -333,7 +333,7 @@ public class Game extends AppCompatActivity
                 }
                 env.outAllBirbs();
                 for (int i = 0; i < 14; i++) {
-                    if (i < tempBirbs.size() - 1) {
+                    if (i <= tempBirbs.size() - 1) {
                         findViewById(birbImages[i]).setVisibility(View.VISIBLE);
 
                         float[] hsv = new float[3];

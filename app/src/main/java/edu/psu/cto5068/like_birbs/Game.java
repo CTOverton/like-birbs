@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import edu.psu.cto5068.like_birbs.game.DisplayBirbs;
 import edu.psu.cto5068.like_birbs.game.DisplayEventDialog;
 import edu.psu.cto5068.like_birbs.game.DisplayLogDialog;
 
@@ -43,7 +44,7 @@ import edu.psu.cto5068.like_birbs.game.DisplayLogDialog;
  */
 public class Game extends AppCompatActivity
         implements DisplayEventDialog.EventDialogListener,
-        DisplayLogDialog.LogDialogListener
+        DisplayLogDialog.LogDialogListener, DisplayBirbs.LogDialogListener
 
 {
 
@@ -463,7 +464,7 @@ public class Game extends AppCompatActivity
         Bundle arguments = new Bundle();
         if (isDeaths == null) {
             arguments.putStringArrayList("logs", logs);
-            DialogFragment df = new DisplayLogDialog();
+            DialogFragment df = new DisplayBirbs();
             df.setArguments(arguments);
             df.show(getSupportFragmentManager(), "birbStats");
         }

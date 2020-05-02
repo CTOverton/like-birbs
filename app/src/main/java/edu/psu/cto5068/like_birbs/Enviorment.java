@@ -715,12 +715,19 @@ public class Enviorment {
         this.generationNum++;
     }
 
-    public void outAllBirbs() {
+    public ArrayList<String> outAllBirbs() {
+        ArrayList<String> retBirbs = new ArrayList<>();
+
         for (Birb birb : birbs) {
-            System.out.println(birb.getName() + ": " + " Str: " + birb.getStrengthDecimal() + " Spd: "
-                    + birb.getSpeedDecimal() + " Fther: " + birb.getFeathersDecimal()
-                    + " Col: " + birb.getColorDecimal() + " Swm: "
-                    + birb.getSwimmingDecimal());
+            retBirbs.add(birb.getName() + " Stats: \n" + "Str: " + birb.getStrengthDecimal() + "\nSpd: "
+                    + birb.getSpeedDecimal() + "\nFther: " + birb.getFeathersDecimal()
+                    + "\nCol: " + birb.getColorDecimal() + "\nSwm: "
+                    + birb.getSwimmingDecimal() + "\nNOC: " + (birb.isNocturnal() ? "X" : "")
+                    + "\nCARN: " + (birb.isCarniverous() ? "X" : "")
+                    + "\nCANI: " + (birb.isCannibalistic() ? "X" : "") +
+                    "\n_________________");
         }
+
+        return retBirbs;
     }
 }

@@ -24,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.devs.vectorchildfinder.VectorChildFinder;
 import com.devs.vectorchildfinder.VectorDrawableCompat;
@@ -74,6 +75,7 @@ public class Game extends AppCompatActivity
     private Enviorment env;
     private int[] birbImages;
     private boolean keepMusicGoing = false;
+    private int currentEvent = 0;
     //
 
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -129,7 +131,9 @@ public class Game extends AppCompatActivity
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        EnviormentDatabase.insert(env);
         outState.putBoolean("newGame", false);
+        outState.putInt("currentEvent", currentEvent);
     }
 
     @Override
@@ -152,6 +156,8 @@ public class Game extends AppCompatActivity
                 }
             });
 
+            currentEvent = inState.getInt("currentEvent");
+            ((TextView) findViewById(R.id.gencounter)).setText(env.getGenerationNum());
         }
     }
     @Override
@@ -303,6 +309,10 @@ public class Game extends AppCompatActivity
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (id) {
+            case (R.id.view_birbs):
+                v.vibrate(100);
+                popLogDialog(env.outAllBirbs(), null);
+                break;
             case (R.id.view_birth_logs):
                 v.vibrate(100);
                 popLogDialog(env.getLogs().getBirths(), false);
@@ -332,6 +342,7 @@ public class Game extends AppCompatActivity
                 env.incrementGeneration();
 
                 int randomEvent = env.randomEvent();
+                this.currentEvent = randomEvent;
 
                 if (randomEvent != Enviorment.NO_EVENT) {
                     Bundle args = new Bundle();
@@ -354,20 +365,21 @@ public class Game extends AppCompatActivity
                     BirbDatabase.insert(birb);
                 }
 
-                EnviormentDatabase.insert(env);
+                //EnviormentDatabase.insert(env);
 
                 System.out.println(tempBirbs.size());
                 if (tempBirbs.size() == 0) {
                     Intent gameOver = new Intent(this, Game_over.class);
                     Bundle extras = new Bundle();
                     extras.putInt("totalGens", env.getGenerationNum());
+                    extras.putInt("env", env.getLandType());
                     keepMusicGoing = true;
                     gameOver.putExtras(extras);
                     startActivity(gameOver);
                     finish();
                     return;
                 }
-                env.outAllBirbs();
+
                 for (int i = 0; i < 14; i++) {
                     if (i <= tempBirbs.size() - 1) {
                         findViewById(birbImages[i]).setVisibility(View.VISIBLE);
@@ -392,6 +404,8 @@ public class Game extends AppCompatActivity
                         findViewById(birbImages[i]).setVisibility(View.INVISIBLE);
                     }
                 }
+
+                ((TextView) findViewById(R.id.gencounter)).setText(String.valueOf(env.getGenerationNum()));
 
                 break;
             case (R.id.main_menu):
@@ -447,23 +461,60 @@ public class Game extends AppCompatActivity
 
     public void popLogDialog(ArrayList<String> logs, Boolean isDeaths) {
         Bundle arguments = new Bundle();
-        arguments.putBoolean("deathLogs", isDeaths);
-        arguments.putStringArrayList("logs", logs);
+        if (isDeaths == null) {
+            arguments.putStringArrayList("logs", logs);
+            DialogFragment df = new DisplayLogDialog();
+            df.setArguments(arguments);
+            df.show(getSupportFragmentManager(), "birbStats");
+        }
+        else {
+            arguments.putBoolean("deathLogs", isDeaths);
+            arguments.putStringArrayList("logs", logs);
 
-        DialogFragment df = new DisplayLogDialog();
-        df.setArguments(arguments);
-        df.show(getSupportFragmentManager(), isDeaths ? "logDialogDeaths" : "logDialogBirths");
+            DialogFragment df = new DisplayLogDialog();
+            df.setArguments(arguments);
+            df.show(getSupportFragmentManager(), isDeaths ? "logDialogDeaths" : "logDialogBirths");
+        }
     }
 
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
-        // Todo: Handle positive action
+        if (this.currentEvent == Enviorment.CRASHED_SHIP) {
+            int event = 0;
+            while (event != Enviorment.CRASHED_SHIP) {
+                event = (int) (Math.random() * 12) + 1;
+            }
+            Bundle args = new Bundle();
+            args.putString("title", getResources().getStringArray(R.array.eventTitles)[event]);
+            args.putString("message", getResources().getStringArray(R.array.eventMessages)[event]);
+
+            args.putString("posButton", getResources().getStringArray(R.array.eventPositive)[event]);
+            args.putString("negButton", getResources().getStringArray(R.array.eventNegative)[event]);
+
+            DialogFragment d = new DisplayEventDialog();
+            d.setArguments(args);
+            d.show(getSupportFragmentManager(), "eventDialog");
+            env.setRandomEvent(event, (int) (Math.random() * 5) + 1);
+            this.currentEvent = event;
+        }
     }
 
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
-        // Todo: Handle negative action
+        if (this.currentEvent == Enviorment.CRASHED_SHIP) {
+            Bundle args = new Bundle();
+            args.putString("title", getString(R.string.ignore_title));
+            args.putString("message", getString(R.string.ignore_title));
+
+            args.putString("posButton", getString(R.string.ignore_title));
+            args.putString("negButton", getString(R.string.ignore_title));
+
+            DialogFragment d = new DisplayEventDialog();
+            d.setArguments(args);
+            d.show(getSupportFragmentManager(), "eventDialog");
+        }
+
     }
 
     @Override

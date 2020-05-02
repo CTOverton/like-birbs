@@ -238,6 +238,10 @@ public class Start_2_customize_birb extends AppCompatActivity {
                 finish();
                 return;
             case(R.id.done_button):
+                if (birbsMade >= 10) {
+                    // the Dr. Jeremy Blum Bug Hot Fix
+                    break;
+                }
                 initialBirbPercents[birbsMade][0] = ((SeekBar) findViewById(R.id.seekBar_strength)).getProgress();
                 initialBirbPercents[birbsMade][1] = ((SeekBar) findViewById(R.id.seekBar_speed)).getProgress();
                 initialBirbPercents[birbsMade][2] = ((SeekBar) findViewById(R.id.seekBar_feathers)).getProgress();
@@ -247,7 +251,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
                 Toast.makeText(this, "Birb " + birbNames[birbsMade] + " Spawned!", Toast.LENGTH_LONG).show();
 
                 birbsMade++;
-
+                ((TextView) findViewById(R.id.textView_birbname)).setText(names.getRandomName());
 
                 if (birbsMade == 10) {
                     Intent startGame = new Intent(this, Game.class);

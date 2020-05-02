@@ -107,6 +107,9 @@ public class FullscreenActivity extends AppCompatActivity {
         if(playMusicPreference) {
             startService(new Intent(FullscreenActivity.this, SoundService.class));
         }
+        else {
+            stopService(new Intent(FullscreenActivity.this, SoundService.class));
+        }
         setContentView(R.layout.activity_fullscreen);
 
         mVisible = true;

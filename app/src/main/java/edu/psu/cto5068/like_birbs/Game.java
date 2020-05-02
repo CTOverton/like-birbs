@@ -345,7 +345,8 @@ public class Game extends AppCompatActivity
 
                 int randomEvent = env.randomEvent();
                 this.currentEvent = randomEvent;
-
+                System.out.println( "******************" + randomEvent + "**********************");
+                System.out.println( "******************" + env.getRandomEventDurationLeft() + "**********************");
                 if (randomEvent != Enviorment.NO_EVENT) {
                     Bundle args = new Bundle();
                     args.putString("title", getResources().getStringArray(R.array.eventTitles)[randomEvent]);

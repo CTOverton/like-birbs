@@ -197,19 +197,15 @@ public class Enviorment {
 
         if (currentRandomEventType == BONUS_VEG_EVENT) {
             tempVegAmount *= 2;
-            this.randomEventDurationLeft--;
         }
         else if (currentRandomEventType == BONUS_MEAT_EVENT) {
             tempMeatAmount *= 2;
-            this.randomEventDurationLeft--;
         }
         else if (currentRandomEventType == FAMINE_VEG_EVENT) {
             tempVegAmount /= 2;
-            this.randomEventDurationLeft--;
         }
         else if (currentRandomEventType == FAMINE_MEAT_EVENT) {
             tempMeatAmount /= 2;
-            this.randomEventDurationLeft--;
         }
 
         do {
@@ -425,7 +421,6 @@ public class Enviorment {
                 for (int i = 0; i < 4; i++) {
                     predatorDetection[i] += 250;
                 }
-                this.currentRandomEventType--;
             }
 
             boolean detected = true;
@@ -494,11 +489,9 @@ public class Enviorment {
         // apply event
         if (currentRandomEventType == INCREASED_TEMP_EVENT) {
             targetDecFeathers =- (int) (Math.random() * 5000) + 1000;
-            this.randomEventDurationLeft--;
         }
         else if (currentRandomEventType == DECREASED_TEMP_EVENT) {
             targetDecFeathers =+ (int) (Math.random() * 5000) + 1000;
-            this.randomEventDurationLeft--;
         }
         // Survival range
         int succRange;
@@ -563,7 +556,6 @@ public class Enviorment {
             int waterLevels = (int) (Math.random() * 55000);
             if (currentRandomEventType == HEAVY_RAINS_EVENT) {
                 waterLevels += (int) (Math.random() * 10000) + 1000;
-                this.randomEventDurationLeft--;
             }
 
             for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
@@ -618,10 +610,6 @@ public class Enviorment {
             log.addBirth(mommy, daddy, temp.getName());
             birbs.add(temp);
         }
-        if (this.currentRandomEventType == RADIOACTIVE_FALLOUT_EVENT) {
-            this.randomEventDurationLeft--;
-        }
-
     }
 
     public boolean allDead() {
@@ -668,8 +656,9 @@ public class Enviorment {
     }
 
     public int randomEvent() {
-        if (randomEventDurationLeft == 0) {
+        if (randomEventDurationLeft <= 0) {
             currentRandomEventType = NO_EVENT;
+            randomEventDurationLeft = 0; // fail safe
         }
         if (currentRandomEventType == NO_EVENT) {
             int newRandom = (int) (Math.random() * 10);

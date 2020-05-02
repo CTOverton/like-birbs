@@ -483,13 +483,14 @@ public class Game extends AppCompatActivity
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         if (this.currentEvent == Enviorment.CRASHED_SHIP) {
-            int event = Enviorment.CRASHED_SHIP;
-            while (event == Enviorment.CRASHED_SHIP) {
+            int event;
+            do {
                 event = (int) (Math.random() * 12) + 1;
-            }
+            } while (event == Enviorment.CRASHED_SHIP);
+
             Toast.makeText(this, "Ship Contained: " +
                     getResources().getStringArray(R.array.eventTitles)[event], Toast.LENGTH_LONG).show();
-            env.setRandomEvent(event, (int) (Math.random() * 5) + 1);
+            this.env.setRandomEvent(event, (int) (Math.random() * 5) + 1);
             this.currentEvent = event;
         }
     }

@@ -248,7 +248,7 @@ public class Start_2_customize_birb extends AppCompatActivity {
                 initialBirbPercents[birbsMade][3] = ((SeekBar) findViewById(R.id.seekBar_body_color)).getProgress();
                 initialBirbPercents[birbsMade][4] = ((SeekBar) findViewById(R.id.seekBar_swim)).getProgress();
                 birbNames[birbsMade] = ((TextView) findViewById(R.id.textView_birbname)).getText().toString();
-                Toast.makeText(this, "Birb " + birbNames[birbsMade] + " Spawned!", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Birb " + birbNames[birbsMade] + " Spawned!", Toast.LENGTH_SHORT).show();
 
                 birbsMade++;
                 ((TextView) findViewById(R.id.textView_birbname)).setText(names.getRandomName());

@@ -25,6 +25,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.devs.vectorchildfinder.VectorChildFinder;
 import com.devs.vectorchildfinder.VectorDrawableCompat;
@@ -482,20 +483,12 @@ public class Game extends AppCompatActivity
     @Override
     public void onDialogPositiveClick(DialogFragment dialog) {
         if (this.currentEvent == Enviorment.CRASHED_SHIP) {
-            int event = 0;
-            while (event != Enviorment.CRASHED_SHIP) {
+            int event = Enviorment.CRASHED_SHIP;
+            while (event == Enviorment.CRASHED_SHIP) {
                 event = (int) (Math.random() * 12) + 1;
             }
-            Bundle args = new Bundle();
-            args.putString("title", getResources().getStringArray(R.array.eventTitles)[event]);
-            args.putString("message", getResources().getStringArray(R.array.eventMessages)[event]);
-
-            args.putString("posButton", getResources().getStringArray(R.array.eventPositive)[event]);
-            args.putString("negButton", getResources().getStringArray(R.array.eventNegative)[event]);
-
-            DialogFragment d = new DisplayEventDialog();
-            d.setArguments(args);
-            d.show(getSupportFragmentManager(), "eventDialog");
+            Toast.makeText(this, "Ship Contained: " +
+                    getResources().getStringArray(R.array.eventTitles)[event], Toast.LENGTH_LONG).show();
             env.setRandomEvent(event, (int) (Math.random() * 5) + 1);
             this.currentEvent = event;
         }
@@ -504,16 +497,7 @@ public class Game extends AppCompatActivity
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         if (this.currentEvent == Enviorment.CRASHED_SHIP) {
-            Bundle args = new Bundle();
-            args.putString("title", getString(R.string.ignore_title));
-            args.putString("message", getString(R.string.ignore_title));
-
-            args.putString("posButton", getString(R.string.ignore_title));
-            args.putString("negButton", getString(R.string.ignore_title));
-
-            DialogFragment d = new DisplayEventDialog();
-            d.setArguments(args);
-            d.show(getSupportFragmentManager(), "eventDialog");
+            Toast.makeText(this, "Birbs ignore the ship...", Toast.LENGTH_LONG).show();
         }
 
     }

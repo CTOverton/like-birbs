@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 
 /*
@@ -628,7 +629,6 @@ public class Enviorment {
     }
 
     public void birbsShuffle() {
-        Birb tempBirb;
         int swapIdx1;
         int swapIdx2;
 
@@ -639,9 +639,7 @@ public class Enviorment {
                 swapIdx2 = (int) (Math.random() * birbs.size());
             } while (swapIdx1 == swapIdx2);
 
-            tempBirb = birbs.get(swapIdx1);
-            birbs.set(swapIdx1, birbs.get(swapIdx2));
-            birbs.set(swapIdx2, tempBirb);
+            Collections.swap(birbs, swapIdx1, swapIdx2);
         }
     }
 
@@ -700,6 +698,9 @@ public class Enviorment {
             this.birbsReproduce();
             this.randomEventDurationLeft--;
             return 0;
+        }
+        else {
+            this.randomEventDurationLeft--;
         }
 
         return 0;

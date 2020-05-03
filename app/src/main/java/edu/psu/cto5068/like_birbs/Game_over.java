@@ -32,6 +32,7 @@ import java.util.Map;
 public class Game_over extends AppCompatActivity {
 
     private static final String USER_KEY = "username";
+    private static final String ENV_KEY = "env";
     private static final String SCORE_KEY = "score";
     private static final String TAG = "Game_over";
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -113,7 +114,26 @@ public class Game_over extends AppCompatActivity {
         setContentView(R.layout.activity_game_over);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
+        Integer env = extras.getInt("env");
         Integer score = extras.getInt("totalGens");
+
+        String environment;
+        switch (env) {
+            case 0:
+                environment = "Meadow";
+                break;
+            case 2:
+                environment = "Desert";
+                break;
+            case 3:
+                environment = "Snow";
+                break;
+            case 4:
+                environment = "Island";
+                break;
+            default:
+                environment = "Unknown";
+        }
 
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this /* Activity context */);
@@ -122,8 +142,10 @@ public class Game_over extends AppCompatActivity {
 
         if (upload_score) {
             Map<String, Object> dataToSave = new HashMap<String, Object>();
-            dataToSave.put(SCORE_KEY, score);
             dataToSave.put(USER_KEY, username);
+            dataToSave.put(ENV_KEY, environment);
+            dataToSave.put(SCORE_KEY, score);
+
             db.collection("highscores")
                     .add(dataToSave)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

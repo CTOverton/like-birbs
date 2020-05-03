@@ -29,16 +29,19 @@ public class ScoreListAdapter extends ArrayAdapter<HighScore> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         String username = getItem(position).getUsername();
+        String env = getItem(position).getEnv();
         int score = getItem(position).getScore();
-        HighScore highScore = new HighScore(username, score);
+        HighScore highScore = new HighScore(username, env, score);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         convertView = inflater.inflate(mResource, parent, false);
 
         TextView nameView = convertView.findViewById(R.id.nameView);
+        TextView envView = convertView.findViewById(R.id.envView);
         TextView scoreView = convertView.findViewById(R.id.scoreView);
 
         nameView.setText(username);
+        envView.setText(env);
         scoreView.setText(Integer.toString(score));
 
         return convertView;

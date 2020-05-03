@@ -10,15 +10,23 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:paddingStart="16dp"
-        android:text="TextView"
+        android:text="Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/envView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:text="Env"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
         android:id="@+id/scoreView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold" />
+        android:layout_weight="2"
+        android:text="Score"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 </LinearLayout>

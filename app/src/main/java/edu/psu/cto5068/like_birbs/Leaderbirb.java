@@ -148,8 +148,8 @@ public class Leaderbirb extends AppCompatActivity {
 
                         List<HighScore> highscores = new ArrayList<>();
                         for (QueryDocumentSnapshot doc : value) {
-                            if (doc.get("username") != null && highscores.size() < num_scores) {
-                                highscores.add(new HighScore(doc.getString("username"), doc.getLong("score").intValue()));
+                            if (doc.get("username") != null && doc.get("env") != null && doc.get("score") != null && highscores.size() < num_scores) {
+                                highscores.add(new HighScore(doc.getString("username"), doc.getString("env"), doc.getLong("score").intValue()));
                             }
                         }
                         Log.d(TAG, "Current highscores: " + highscores);

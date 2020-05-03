@@ -78,6 +78,7 @@ public class Game extends AppCompatActivity
     private int[] birbImages;
     private boolean keepMusicGoing = false;
     private int currentEvent = 0;
+    private BirbNameGenerator nameGenerator = new BirbNameGenerator();
     //
 
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -347,7 +348,51 @@ public class Game extends AppCompatActivity
                 this.currentEvent = randomEvent;
                 System.out.println( "******************" + randomEvent + "**********************");
                 System.out.println( "******************" + env.getRandomEventDurationLeft() + "**********************");
-                if (randomEvent != Enviorment.NO_EVENT) {
+
+                if (!env.enoughToReproduce() && !env.allDead()) {
+                    int newBirbRoll = (int) (Math.random() * 5);
+                    int numberOfNewBirbs = (int) (Math.random() * 3) + 1;
+                    ArrayList<String> names = new ArrayList<>();
+                    if (newBirbRoll == 0) {
+                        for (int i = 0; i < numberOfNewBirbs; i++) {
+                            // Seriously.. I gotta not do this...
+                            // Dr. Blum if you're reading this, forgive my sins VVVVVV
+                            int tempId         = (int) (Math.random() * Integer.MAX_VALUE);
+                            int tempStrength   = (int) (Math.random() * 65_535);
+                            int tempSpeed      = (int) (Math.random() * 65_535);
+                            int tempFeather    = (int) (Math.random() * 65_535);
+                            int tempColor      = (int) (Math.random() * 32_767);
+                            int tempSwimming   = (int) (Math.random() * 65_535);
+                            boolean tempNoct   = (0 == (int) (Math.random() * 10));
+                            boolean tempCarn   = (0 == (int) (Math.random() * 10));
+                            String tempName    = nameGenerator.getRandomName();
+
+                            names.add(tempName);
+                            env.addBirb(new Birb(tempId, tempStrength, tempSpeed, tempFeather,
+                                    tempColor, tempSwimming, new boolean[]{tempNoct, tempCarn},
+                                    tempName));
+                        }
+
+                        StringBuilder message = new StringBuilder(numberOfNewBirbs +
+                                (numberOfNewBirbs == 1 ? " Birb" : " Birbs")  +
+                                " wander into the colony...\n" +
+                                "Their stats are unknown.. but their names are: \n");
+                        for (String name : names) {
+                            message.append(name).append("\n");
+                        }
+
+                        Bundle args = new Bundle();
+                        args.putString("title", getString(R.string.birbs_join));
+                        args.putString("message", message.toString());
+                        args.putString("posButton", getString(R.string.birbs_pos));
+                        args.putString("negButton", getString(R.string.birb_neg));
+
+                        DialogFragment d = new DisplayEventDialog();
+                        d.setArguments(args);
+                        d.show(getSupportFragmentManager(), "eventDialog");
+                    }
+                }
+                else if (randomEvent != Enviorment.NO_EVENT) {
                     Bundle args = new Bundle();
                     args.putString("title", getResources().getStringArray(R.array.eventTitles)[randomEvent]);
                     args.putString("message", getResources().getStringArray(R.array.eventMessages)[randomEvent]);

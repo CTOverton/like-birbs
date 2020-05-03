@@ -20,6 +20,7 @@
         <item>CRASHED CARGO SHIP</item>
         <item>PLANT LIFE BLIGHT</item>
         <item>PREY VANISHES</item>
+        <item>TWINS!</item>
     </string-array>
 
     <string-array name="eventMessages">
@@ -36,6 +37,7 @@
         <item>A cargo ship has crashed in this location!  Should the birbs investigate the ship or leave it alone?</item>
         <item>Something is now killing the vegetation in the area.  The birbs will have a hard time obtaining non-meat food.</item>
         <item>Something has killed many of the small animals the carnivorous birbs like to hunt.  They will have a hard time finding food.</item>
+        <item>Two birbs gave birth to twins! Two birbs were born instead of one for this pair!</item>
     </string-array>
 
     <string-array name="eventPositive">
@@ -52,6 +54,7 @@
         <item>Mess with ship</item>
         <item>This is REALLY bad</item>
         <item>This is REALLY bad</item>
+        <item>We can\'t support two!</item>
     </string-array>
 
     <string-array name="eventNegative">
@@ -68,5 +71,6 @@
         <item>Don\'t mess with ship</item>
         <item>This is pretty bad</item>
         <item>This is pretty bad</item>
+        <item>Ah the miracle of life</item>
     </string-array>
 </resources>

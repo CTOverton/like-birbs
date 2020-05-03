@@ -663,7 +663,14 @@ public class Enviorment {
         if (currentRandomEventType == NO_EVENT) {
             int newRandom = (int) (Math.random() * 10);
             if (newRandom == 0) {
-                newRandom = (int) (Math.random() * 13);
+                newRandom = (int) (Math.random() * 14);
+
+                if (newRandom == 14) {
+                    int pairStart = (int) (Math.random() * (this.birbs.size() - 1));
+                    this.birbs.add(new Birb(this.birbs.get(pairStart),
+                            this.birbs.get(pairStart + 1),
+                            this.currentRandomEventType == Enviorment.RADIOACTIVE_FALLOUT_EVENT));
+                }
                 return newRandom; // tell driver to set new random event handle ship event if == 10
             }
             else {
@@ -719,5 +726,9 @@ public class Enviorment {
         }
 
         return retBirbs;
+    }
+
+    public void addBirb(Birb birb) {
+        this.birbs.add(birb);
     }
 }

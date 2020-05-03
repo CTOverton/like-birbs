@@ -50,5 +50,9 @@
     <string name="ignore_pos">Good</string>
     <string name="ignore_neg">I don\'t like mysteries</string>
 
+
+    <string name="birbs_join">WANDERING BIRBS</string>
+    <string name="birbs_pos">Thank you Based Birb</string>
+    <string name="birb_neg">Who are you people?</string>
     <string name="gens">0</string>
 </resources>

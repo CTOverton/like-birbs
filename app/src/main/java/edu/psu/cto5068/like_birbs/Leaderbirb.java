@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -46,6 +47,7 @@ public class Leaderbirb extends AppCompatActivity {
     private static final String USER_KEY = "username";
     private static final String SCORE_KEY = "score";
     private static final String TAG = "Leaderbirb";
+    private boolean keepMusicGoing = false;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
@@ -197,5 +199,24 @@ public class Leaderbirb extends AppCompatActivity {
      */
     private void delayedHide(int delayMillis) {
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        keepMusicGoing = false;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
+
+        if(playMusicPreference) {
+            startService(new Intent(Leaderbirb.this, SoundService.class));
+        }
+    }
+    @Override
+    public void onPause(){
+        super.onPause();
+        if (!keepMusicGoing) {
+            stopService(new Intent(Leaderbirb.this, SoundService.class));
+        }
     }
 }

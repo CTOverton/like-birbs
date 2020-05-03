@@ -9,6 +9,20 @@
     tools:context=".Game">
 
     <Button
+        android:id="@+id/view_event"
+        android:layout_width="124dp"
+        android:layout_height="50dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/design_default_color_primary"
+        android:backgroundTintMode="add"
+        android:fontFamily="@font/roboto_mono_medium"
+        android:onClick="gameClick"
+        android:text="@string/view_event"
+        android:textColor="#FFFFFF"
+        app:layout_constraintStart_toEndOf="@+id/view_birbs"
+        app:layout_constraintTop_toBottomOf="@+id/view_death_logs" />
+
+    <Button
         android:id="@+id/view_birbs"
         android:layout_width="124dp"
         android:layout_height="50dp"

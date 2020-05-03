@@ -44,6 +44,7 @@
     <string name="view_death_logs">View Deaths</string>
     <string name="view_birth_logs">View Births</string>
     <string name="view_birbs">View Birb Stats</string>
+    <string name ="view_event">View Current Event</string>
 
     <string name="ignore_title">BIRBS IGNORE SHIP</string>
     <string name="ignore_text">The birbs opt to ignore the ship and whatever it may hold</string>
@@ -55,4 +56,9 @@
     <string name="birbs_pos">Thank you Based Birb</string>
     <string name="birb_neg">Who are you people?</string>
     <string name="gens">0</string>
+
+    <string name="murber">MURBER BIRB ON THE LOOSE</string>
+    <string name="murber_pos">NOOOOOOOOO</string>
+    <string name="murber_neg">Eh, I didn\'t like him anyway</string>
+
 </resources>

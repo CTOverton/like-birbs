@@ -130,6 +130,8 @@ public class Enviorment {
     public static final int CRASHED_SHIP              = 10;
     public static final int FAMINE_VEG_EVENT          = 11;
     public static final int FAMINE_MEAT_EVENT         = 12;
+    public static final int TWINS_EVENT               = 13;
+    public static final int STICK_EVENT               = 14;
 
     public Enviorment(ArrayList<Birb> initPopulation, int envType) {
         this.birbs = new ArrayList<>(initPopulation);
@@ -362,7 +364,10 @@ public class Enviorment {
      *      Nocturnal: BLACK (ie. 00000 00000 00000) or 0
      */
     public void predatorsEat() {
-        // TODO:
+        Birb birbWithStick = null;
+        if (currentRandomEventType == Enviorment.STICK_EVENT) {
+            birbWithStick = birbs.get((int) (Math.random() * birbs.size()));
+        }
         for (Iterator<Birb> birbIter = birbs.iterator(); birbIter.hasNext();) {
             Birb birb = birbIter.next();
             int succRange = (int) (Math.random() * 100);
@@ -450,7 +455,7 @@ public class Enviorment {
             }
 
             succRange = (int) (Math.random() * 100);
-            if (detected) {
+            if (detected && !(birbWithStick == birb)) {
                 if (succRange < 50) {
                     if (!(predatorSpeed - 5000 < birb.getSpeedDecimal())){
                         log.addDeath(birb.getName(), BirbLog.EATEN_DEATH, birb.getGenerationsAlive());
@@ -663,9 +668,9 @@ public class Enviorment {
         if (currentRandomEventType == NO_EVENT) {
             int newRandom = (int) (Math.random() * 10);
             if (newRandom == 0) {
-                newRandom = (int) (Math.random() * 14);
+                newRandom = (int) (Math.random() * 15);
 
-                if (newRandom == 14) {
+                if (newRandom == Enviorment.TWINS_EVENT) {
                     int pairStart = (int) (Math.random() * (this.birbs.size() - 1));
                     this.birbs.add(new Birb(this.birbs.get(pairStart),
                             this.birbs.get(pairStart + 1),
@@ -694,6 +699,16 @@ public class Enviorment {
             this.birbsReproduce();
             this.randomEventDurationLeft--;
             return 0;
+        }
+        else if (currentRandomEventType == STICK_EVENT) {
+            int killChance = (int) (Math.random() * 10);
+            this.randomEventDurationLeft--;
+            if (killChance == 0) {
+                return -1; // Flag that birby got mad
+            }
+            else {
+                return 0;
+            }
         }
         else {
             this.randomEventDurationLeft--;
@@ -726,6 +741,21 @@ public class Enviorment {
         }
 
         return retBirbs;
+    }
+
+    public String stickBirb() {
+        int killer = (int) (Math.random() * birbs.size());
+        int victim;
+
+        do {
+            victim = (int) (Math.random() * birbs.size());
+        }while (victim != killer);
+
+        String message = "Birb " + birbs.get(killer).getName() + " got into a heated argument with another birb, " +
+                birbs.get(victim).getName() + ", and killed them with their stick.";
+        birbs.remove(victim);
+
+        return message;
     }
 
     public void addBirb(Birb birb) {

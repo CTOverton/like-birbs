@@ -312,6 +312,12 @@ public class Game extends AppCompatActivity
         Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
         switch (id) {
+            case (R.id.view_event):
+                v.vibrate(100);
+                Toast.makeText(this, "Current Random Event: " +
+                        getResources().getStringArray(R.array.eventTitles)[env.getCurrentRandomEventType()], Toast.LENGTH_LONG)
+                .show();
+                break;
             case (R.id.view_birbs):
                 v.vibrate(100);
                 popLogDialog(env.outAllBirbs(), null);
@@ -392,7 +398,7 @@ public class Game extends AppCompatActivity
                         d.show(getSupportFragmentManager(), "eventDialog");
                     }
                 }
-                else if (randomEvent != Enviorment.NO_EVENT) {
+                else if (randomEvent != Enviorment.NO_EVENT && randomEvent != -1) {
                     Bundle args = new Bundle();
                     args.putString("title", getResources().getStringArray(R.array.eventTitles)[randomEvent]);
                     args.putString("message", getResources().getStringArray(R.array.eventMessages)[randomEvent]);
@@ -404,6 +410,18 @@ public class Game extends AppCompatActivity
                     d.setArguments(args);
                     d.show(getSupportFragmentManager(), "eventDialog");
                     env.setRandomEvent(randomEvent, (int) (Math.random() * 5) + 1);
+                }
+                else if (randomEvent == -1) {
+                    String message = env.stickBirb();
+                    Bundle args = new Bundle();
+                    args.putString("title", getString(R.string.murber));
+                    args.putString("message", message);
+                    args.putString("posButton", getString(R.string.murber_pos));
+                    args.putString("negButton", getString(R.string.murber_neg));
+
+                    DialogFragment d = new DisplayEventDialog();
+                    d.setArguments(args);
+                    d.show(getSupportFragmentManager(), "eventDialog");
                 }
 
                 BirbDatabase.nukeAll();
@@ -531,7 +549,7 @@ public class Game extends AppCompatActivity
         if (this.currentEvent == Enviorment.CRASHED_SHIP) {
             int event;
             do {
-                event = (int) (Math.random() * 12) + 1;
+                event = (int) (Math.random() * 14) + 1;
             } while (event == Enviorment.CRASHED_SHIP);
 
             Toast.makeText(this, "Ship Contained: " +

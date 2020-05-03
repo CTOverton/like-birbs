@@ -119,7 +119,7 @@ public class Game_over extends AppCompatActivity {
 
         String environment;
         switch (env) {
-            case 0:
+            case 1 :
                 environment = "Meadow";
                 break;
             case 2:

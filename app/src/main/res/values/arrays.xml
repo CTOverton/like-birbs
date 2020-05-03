@@ -7,7 +7,7 @@
     </string-array>
 
     <string-array name="eventTitles">
-        <item>This will never occur (ideally)</item>
+        <item>NO EVENT</item>
         <item>INCREASED VEGETATION</item>
         <item>INCREASED PREY</item>
         <item>HEAT WAVE</item>
@@ -21,6 +21,7 @@
         <item>PLANT LIFE BLIGHT</item>
         <item>PREY VANISHES</item>
         <item>TWINS!</item>
+        <item>A STICK WAS FOUND!</item>
     </string-array>
 
     <string-array name="eventMessages">
@@ -38,6 +39,7 @@
         <item>Something is now killing the vegetation in the area.  The birbs will have a hard time obtaining non-meat food.</item>
         <item>Something has killed many of the small animals the carnivorous birbs like to hunt.  They will have a hard time finding food.</item>
         <item>Two birbs gave birth to twins! Two birbs were born instead of one for this pair!</item>
+        <item>The birbs found a nice stick. Until it breaks in a few generations but for now the birb carrying the stick will be able to fend off predators. Let\'s just hope they don\'t hurt anyone with it\.\.\.</item>
     </string-array>
 
     <string-array name="eventPositive">
@@ -55,6 +57,7 @@
         <item>This is REALLY bad</item>
         <item>This is REALLY bad</item>
         <item>We can\'t support two!</item>
+        <item>Hope he can use it</item>
     </string-array>
 
     <string-array name="eventNegative">
@@ -72,5 +75,6 @@
         <item>This is pretty bad</item>
         <item>This is pretty bad</item>
         <item>Ah the miracle of life</item>
+        <item>Be careful birby!</item>
     </string-array>
 </resources>

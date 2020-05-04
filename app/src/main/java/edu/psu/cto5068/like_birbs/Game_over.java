@@ -146,11 +146,16 @@ public class Game_over extends AppCompatActivity {
             dataToSave.put(ENV_KEY, environment);
             dataToSave.put(SCORE_KEY, score);
 
+            SharedPreferences sharedPref = this.getSharedPreferences("highscoreCache",Context.MODE_PRIVATE);
+            final SharedPreferences.Editor editor = sharedPref.edit();
+
             db.collection("highscores")
                     .add(dataToSave)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
+                            editor.putString("highscoreRef", documentReference.getId());
+                            editor.apply();
                             Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                         }
                     })

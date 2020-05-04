@@ -1,14 +1,27 @@
 package edu.psu.cto5068.like_birbs.leaderbirb;
 
 public class HighScore {
+    private int rank;
     private String username;
     private int score;
     private String env;
 
-    public HighScore(String username, String env, int score) {
+    private boolean highlight;
+
+    public HighScore(int rank, String username, String env, int score, boolean highlight) {
+        this.rank = rank;
         this.username = username;
         this.env = env;
         this.score = score;
+        this.highlight = highlight;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public String getUsername() {
@@ -33,5 +46,13 @@ public class HighScore {
 
     public void setEnv(String env) {
         this.env = env;
+    }
+
+    public boolean isHighlight() {
+        return highlight;
+    }
+
+    public void setHighlight(boolean highlight) {
+        this.highlight = highlight;
     }
 }

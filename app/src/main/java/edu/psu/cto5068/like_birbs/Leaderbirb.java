@@ -131,6 +131,9 @@ public class Leaderbirb extends AppCompatActivity {
         final ListView mListView = findViewById(R.id.listView);
         final Context mContext = this;
 
+        SharedPreferences sharedPref = this.getSharedPreferences("highscoreCache", Context.MODE_PRIVATE);
+        final String highscoreRef = sharedPref.getString("highscoreRef", "");
+
         db.collection("highscores")
                 .orderBy("score", Query.Direction.DESCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -146,10 +149,14 @@ public class Leaderbirb extends AppCompatActivity {
                                 PreferenceManager.getDefaultSharedPreferences(mContext /* Activity context */);
                         int num_scores = Integer.parseInt(sharedPreferences.getString("num_scores", ""));
 
+
+
                         List<HighScore> highscores = new ArrayList<>();
+                        int rank = 1;
                         for (QueryDocumentSnapshot doc : value) {
                             if (doc.get("username") != null && doc.get("env") != null && doc.get("score") != null && highscores.size() < num_scores) {
-                                highscores.add(new HighScore(doc.getString("username"), doc.getString("env"), doc.getLong("score").intValue()));
+                                highscores.add(new HighScore(rank, doc.getString("username"), doc.getString("env"), doc.getLong("score").intValue(), (!highscoreRef.equals("") && highscoreRef.equals(doc.getId()))));
+                                rank++;
                             }
                         }
                         Log.d(TAG, "Current highscores: " + highscores);

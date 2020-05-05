@@ -749,7 +749,7 @@ public class Enviorment {
 
         do {
             victim = (int) (Math.random() * birbs.size());
-        }while (victim != killer);
+        }while (victim == killer);
 
         String message = "Birb " + birbs.get(killer).getName() + " got into a heated argument with another birb, " +
                 birbs.get(victim).getName() + ", and killed them with their stick.";

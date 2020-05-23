@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.psu.cto5068.like_birbs">
 
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <service android:name=".SoundService" android:enabled="true"></service>
+        <activity
+            android:name=".credits"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_credits"
+            android:screenOrientation="landscape"
+            android:theme="@style/FullscreenTheme"/>
+
+        <service
+            android:name=".SoundService"
+            android:enabled="true" />
+
         <activity
             android:name=".SettingsActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -36,9 +46,7 @@
             android:label="@string/title_activity_settings"
             android:parentActivityName=".FullscreenActivity"
             android:screenOrientation="landscape"
-            android:theme="@style/FullscreenTheme"
-
-        />
+            android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".Game"
             android:configChanges="orientation|keyboardHidden|screenSize"

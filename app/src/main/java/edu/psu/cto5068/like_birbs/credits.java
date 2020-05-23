@@ -1,22 +1,19 @@
 package edu.psu.cto5068.like_birbs;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Context;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Vibrator;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
 
 import com.devs.vectorchildfinder.VectorChildFinder;
 import com.devs.vectorchildfinder.VectorDrawableCompat;
@@ -25,11 +22,7 @@ import com.devs.vectorchildfinder.VectorDrawableCompat;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenActivity extends AppCompatActivity {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
+public class credits extends AppCompatActivity {
     private static final boolean AUTO_HIDE = true;
 
     /**
@@ -105,15 +98,14 @@ public class FullscreenActivity extends AppCompatActivity {
         boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
 
         if(playMusicPreference) {
-            startService(new Intent(FullscreenActivity.this, SoundService.class));
+            startService(new Intent(credits.this, SoundService.class));
         }
         else {
-            stopService(new Intent(FullscreenActivity.this, SoundService.class));
+            stopService(new Intent(credits.this, SoundService.class));
         }
-        setContentView(R.layout.activity_fullscreen);
+        setContentView(R.layout.activity_credits);
 
         mVisible = true;
-
     }
 
     @Override
@@ -159,45 +151,11 @@ public class FullscreenActivity extends AppCompatActivity {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    public void gameClick(View view) {
-        int id = view.getId();
-        Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-
-        switch (id) {
-            case (R.id.exitButton):
-                // code to exit game
-                v.vibrate(100);
-                System.exit(0);
-                break;
-            case (R.id.goToScoresButton):
-                // code to see scores
-                v.vibrate(100);
-                keepMusicGoing = true;
-                Intent nextScreenIntent = new Intent(this, Leaderbirb.class);
-                startActivity(nextScreenIntent);
-                break;
-            case (R.id.goToCredits):
-                v.vibrate(100);
-                keepMusicGoing = true;
-                Intent creditsScreenIntent = new Intent(this, credits.class);
-                startActivity(creditsScreenIntent);
-                break;
-            case (R.id.playButton):
-                // code to start game
-                v.vibrate(100);
-                keepMusicGoing = true;
-                Intent playScreenIntent = new Intent(this, Start_1_selection.class);
-                startActivity(playScreenIntent);
-                break;
-            case (R.id.settingsButton):
-                v.vibrate(100);
-                keepMusicGoing = true;
-                Intent settingsIntent = new Intent(this, SettingsActivity.class);
-                startActivity(settingsIntent);
-            default:
-                // error
-                break;
-        }
+    public void backClick(View view) {
+        keepMusicGoing = true;
+        Intent nextScreenIntent = new Intent(this, FullscreenActivity.class);
+        startActivity(nextScreenIntent);
+        finish();
     }
     @Override
     public void onResume() {
@@ -207,37 +165,14 @@ public class FullscreenActivity extends AppCompatActivity {
         boolean playMusicPreference = sharedPreferences.getBoolean("play_music", true);
 
         if(playMusicPreference) {
-            startService(new Intent(FullscreenActivity.this, SoundService.class));
-        }
-
-        int[] birbImages = new int[] {
-                R.id.imageView,
-                R.id.imageView2,
-                R.id.imageView3,
-                R.id.imageView4,
-                R.id.imageView5,
-        };
-
-        for (int i = 0; i < birbImages.length; i++) {
-            float[] hsv = new float[3];
-            hsv[0] = (float) (Math.random() * 360) + 1;
-            hsv[1] = 0.5f;
-            hsv[2] = 0.75f;
-
-            int outputColor = Color.HSVToColor(hsv);
-
-            ImageView img = findViewById(birbImages[i]);
-            VectorChildFinder vector = new VectorChildFinder(this, R.drawable.birb_the_perfect_birb, img);
-
-            VectorDrawableCompat.VFullPath path1 = vector.findPathByName("bodyColor");
-            path1.setFillColor(outputColor);
+            startService(new Intent(credits.this, SoundService.class));
         }
     }
     @Override
     public void onPause(){
         super.onPause();
         if (!keepMusicGoing) {
-            stopService(new Intent(FullscreenActivity.this, SoundService.class));
+            stopService(new Intent(credits.this, SoundService.class));
         }
     }
 }

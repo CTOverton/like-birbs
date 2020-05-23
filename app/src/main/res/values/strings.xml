@@ -22,9 +22,16 @@
 
     <string name="view_logs">VIEW LOGS</string>
     <string name="scores">SCORES</string>
+    <string name="credits">CREDITS</string>
     <string name="menu">MENU</string>
     <string name="play">PLAY</string>
+    <string name="back">BACK</string>
     <string name="exit">EXIT</string>
+    <string name="Developers">DEVELOPERS: </string>
+    <string name="names">Jacob Gallucci \nAriel Rupp \nChristian Overton</string>
+    <string name="music">MUSIC (Please check them out!)</string>
+    <string name="artistssongs">Riddiman - Home \nRiddiman - Serenity \nFresh Air - Zeeky Beats </string>
+    <string name="specialthanks">Special Thanks to Dr. Blum!</string>
     <string name="settings">SETTINGS</string>
     <string name="highscores">Highscore Settings</string>
     <string name="multimedia">Multimedia Settings</string>
@@ -44,7 +51,7 @@
     <string name="view_death_logs">View Deaths</string>
     <string name="view_birth_logs">View Births</string>
     <string name="view_birbs">View Birb Stats</string>
-    <string name ="view_event">View Current Event</string>
+    <string name="view_event">View Current Event</string>
 
     <string name="ignore_title">BIRBS IGNORE SHIP</string>
     <string name="ignore_text">The birbs opt to ignore the ship and whatever it may hold</string>
@@ -60,5 +67,7 @@
     <string name="murber">MURBER BIRB ON THE LOOSE</string>
     <string name="murber_pos">NOOOOOOOOO</string>
     <string name="murber_neg">Eh, I didn\'t like him anyway</string>
+
+    <string name="title_activity_credits">credits</string>
 
 </resources>

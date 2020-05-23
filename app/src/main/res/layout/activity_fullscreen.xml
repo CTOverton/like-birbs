@@ -53,6 +53,20 @@
             android:textColor="@android:color/white" />
 
         <Button
+            android:id="@+id/goToCredits"
+            android:layout_width="142dp"
+            android:layout_height="46dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_button"
+            android:backgroundTint="#3F51B5"
+            android:backgroundTintMode="add"
+            android:onClick="gameClick"
+            android:text="@string/credits"
+            android:textColor="@android:color/white" />
+
+        <Button
             android:id="@+id/settingsButton"
             android:layout_width="142dp"
             android:layout_height="46dp"

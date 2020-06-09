@@ -5,7 +5,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "edu.psu.cto5068.like_birbs"
+        applicationId "ga.hnbenterprises.like_birbs"
         minSdkVersion 27
         targetSdkVersion 29
         versionCode 1

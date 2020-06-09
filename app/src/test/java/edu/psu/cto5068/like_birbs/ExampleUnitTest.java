@@ -1,4 +1,4 @@
-package edu.psu.cto5068.like_birbs;
+package ga.hnbenterprises.like_birbs;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package edu.psu.cto5068.like_birbs;
+package ga.hnbenterprises.like_birbs;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("edu.psu.cto5068.like_birbs", appContext.getPackageName());
+        assertEquals("ga.hnbenterprises.like_birbs", appContext.getPackageName());
     }
 }

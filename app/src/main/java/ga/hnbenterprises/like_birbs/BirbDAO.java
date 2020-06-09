@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -17,6 +18,9 @@ public interface BirbDAO {
     @Query("SELECT * FROM birbs WHERE rowid = :id")
     Birb getById(int id);
 
+    @Query("SELECT * FROM birbs WHERE 1 = 1")
+    List<Birb> getAllBirbs();
+
     @Insert
     void insert(Birb... birbs);
 
@@ -25,4 +29,7 @@ public interface BirbDAO {
 
     @Query("DELETE FROM birbs WHERE id = :id")
     void delete(int id);
+
+    @Query("DELETE FROM birbs WHERE 1=1")
+    void nukeAll();
 }

@@ -7,7 +7,11 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Database(entities = {Birb.class}, version = 1, exportSchema = false)
 @TypeConverters({Converter.class})
@@ -16,10 +20,14 @@ public abstract class BirbDatabase extends RoomDatabase {
         void onBirbReturn(Birb birb);
         void onBirbDeath(Birb ripBirb, int deathID);
     }
+
+    public interface AllBirbsListener {
+        void onBirbsReturn(List<Birb> birbs);
+    }
     public abstract BirbDAO birbDAO();
     private static BirbDatabase INSTANCE;
 
-    public static synchronized BirbDatabase getDatabse(final Context context)  {
+    public static synchronized BirbDatabase getDatabase(final Context context)  {
         if (INSTANCE == null) {
             synchronized (BirbDatabase.class) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
@@ -30,8 +38,8 @@ public abstract class BirbDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback createBirbDatabaseCallback =
-            new RoomDatabase.Callback() {
+    private static Callback createBirbDatabaseCallback =
+            new Callback() {
                 public void onCreate(@NonNull SupportSQLiteDatabase db) {
                     super.onCreate(db);
                     // No need to add default birbs
@@ -87,5 +95,27 @@ public abstract class BirbDatabase extends RoomDatabase {
                 return null;
             }
         }.execute(birbs);
+    }
+
+    public static void nukeAll() {
+        new AsyncTask<Void, Void, Void>() {
+            protected Void doInBackground(Void... voids) {
+                INSTANCE.birbDAO().nukeAll();
+                return null;
+            }
+        }.execute();
+    }
+
+    public static void getAllBirbs(final AllBirbsListener listener) {
+        new AsyncTask<Void, Void, List<Birb>>() {
+            @Override
+            protected List<Birb> doInBackground(Void... voids) {
+                return INSTANCE.birbDAO().getAllBirbs();
+            }
+            @Override
+            protected void onPostExecute(List<Birb> birbs) {
+                listener.onBirbsReturn(birbs);
+            }
+        }.execute();
     }
 }

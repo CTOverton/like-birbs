@@ -104,11 +104,11 @@ public class Birb {
         int tempBinStringLength = tempBinString.length();
         this.strength = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.strength[i] = 0;
             }
             else {
-                this.strength[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.strength[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -116,11 +116,11 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.speed = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.speed[i] = 0;
             }
             else {
-                this.speed[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.speed[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -128,11 +128,11 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.feathers = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.feathers[i] = 0;
             }
             else {
-                this.feathers[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.feathers[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -140,11 +140,11 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.color = new int[15];
         for (int i = 0; i < 15; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.color[i] = 0;
             }
             else {
-                this.color[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.color[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
@@ -152,23 +152,30 @@ public class Birb {
         tempBinStringLength = tempBinString.length();
         this.swimming = new int[16];
         for (int i = 0; i < 16; i++) {
-            if (i > tempBinStringLength) {
+            if (i >= tempBinStringLength) {
                 this.swimming[i] = 0;
             }
             else {
-                this.swimming[i] = tempBinString.charAt(tempBinStringLength - 1 - i);
+                this.swimming[i] = Character.getNumericValue(tempBinString.charAt(tempBinStringLength - 1 - i));
             }
         }
 
     }
     // Reproduction Constructor (used on each generation)
-    public Birb(Birb parent1, Birb parent2) {
+    public Birb(Birb parent1, Birb parent2, boolean radioactive) {
         // Pre-Mutation
         this.strength    = new int[16];
         this.speed       = new int[16];
         this.feathers    = new int[16];
         this.color       = new int[15];
         this.swimming    = new int[16];
+        this.id          = (int) (Math.random() * Integer.MAX_VALUE);
+
+        this.strengthDecimal      = 0;
+        this.speedDecimal         = 0;
+        this.feathersDecimal      = 0;
+        this.colorDecimal         = 0;
+        this.swimmingDecimal      = 0;
 
         int strengthSplit    = (int) (Math.random() * 16);
         int speedSplit       = (int) (Math.random() * 16);
@@ -239,11 +246,17 @@ public class Birb {
          */
 
         // Using 160 so it can be used both as the index for mutation AND as a 10% Roll
-        int strengthRoll = (int) (Math.random() * 160);
-        int speedRoll    = (int) (Math.random() * 160);
-        int colorRoll    = (int) (Math.random() * 150);
-        int featherRoll  = (int) (Math.random() * 160);
-        int swimmingRoll = (int) (Math.random() * 160);
+        int mutationRollRange      = 160;
+        int mutationRollRangeColor = 150;
+        if (radioactive) {
+            mutationRollRange /= 2;
+            mutationRollRangeColor /= 2;
+        }
+        int strengthRoll = (int) (Math.random() * mutationRollRange);
+        int speedRoll    = (int) (Math.random() * mutationRollRange);
+        int colorRoll    = (int) (Math.random() * mutationRollRangeColor);
+        int featherRoll  = (int) (Math.random() * mutationRollRange);
+        int swimmingRoll = (int) (Math.random() * mutationRollRange);
 
         if (strengthRoll < 16) {
             if (this.strength[strengthRoll] == 0) {
@@ -404,5 +417,75 @@ public class Birb {
 
     public int getSwimmingDecimal() {
         return swimmingDecimal;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public void setStrength(int[] str) {
+        strength = str;
+    }
+    public void setSpeed(int[] spd) {
+        speed = spd;
+    }
+
+    public void setColor(int[] col) {
+        color = col;
+    }
+
+    public void setFeathers(int[] feath) {
+        feathers = feath;
+    }
+
+    public void setSwimming(int[] swm) {
+        swimming = swm;
+    }
+
+    public void setStrengthDecimal(int strDec) {
+        strengthDecimal = strDec;
+    }
+
+    public void setSpeedDecimal(int spdDec) {
+        speedDecimal = spdDec;
+    }
+
+    public void setFeathersDecimal(int feathDec) {
+        feathersDecimal = feathDec;
+    }
+
+    public void setColorDecimal(int colDec) {
+        colorDecimal = colDec;
+    }
+
+    public void setSwimmingDecimal(int swmDec) {
+        swimmingDecimal = swmDec;
+    }
+
+    public void setNocturnal(boolean noc) {
+        nocturnal = noc;
+    }
+
+    public void setCarniverous(boolean carn) {
+        carniverous = carn;
+    }
+
+    public void setCannibalistic(boolean cann) {
+        cannibalistic = cann;
+    }
+
+    public void setName(String nm) {
+        name = nm;
+    }
+
+    public void setGenerationsAlive(int gens) {
+        generationsAlive = gens;
     }
 }
